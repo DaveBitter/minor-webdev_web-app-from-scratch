@@ -17,15 +17,11 @@
 // var REFRESH_RATE = 1000;
 // var currentPosition = currentPositionMarker = customDebugging = debugId = map = interval = intervalCounter = updateMap = false;
 // var locatieRij = markerRij = [];
-import {
-    eventTargetFunctions
-} from 'modules/eventTargetFunctions';
-import {
-    mapsFunctions
-} from 'modules/mapsFunctions';
-import {
-    googleMapsFunctions
-} from 'modules/googleMapsFunctions';
-import {
-    debugFunctions
-} from 'modules/debugFunctions';
+/* ==============================================
+    Division of files
+   ============================================== */
+
+   /*
+    Unfortunatly I can't use import to load in the four files with the functions into this file.
+    For now, this has to be done as scripts in the HTML. If yoo don' want to do this you could un-seperate the files and put all of the functions in this file.
+   */
