@@ -1,1 +1,1 @@
-# minor-webdev_web-app-from-scratch
+# Minor WebDev | Web App From Scratch
