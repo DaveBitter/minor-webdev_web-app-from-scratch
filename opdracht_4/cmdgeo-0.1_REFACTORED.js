@@ -18,7 +18,7 @@
 // var currentPosition = currentPositionMarker = customDebugging = debugId = map = interval = intervalCounter = updateMap = false;
 // var locatieRij = markerRij = [];
 /* ==============================================
-    Division of files
+    Multiple files with the functions
    ============================================== */
 
    /*

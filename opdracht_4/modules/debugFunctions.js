@@ -6,7 +6,6 @@ var debugFunctions = (function() {
             return set_custom_debugging(this.debugId)
         }
     };
-    console.log(config.setCustomDebugging);
 
     function debug_message(message) {
         (config.customDebugging && config.debugId) ? document.getElementById(config.debugId).innerHTML: console.log(message);

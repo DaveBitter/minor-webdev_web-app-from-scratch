@@ -8,8 +8,12 @@ var googleMapsFunctions = (function(config) {
         },
         updatePositie: function() {
             return update_positie(event);
+        },
+        validCurrentPos: function() {
+            return isNumber(this.currentPosition);
         }
     };
+    console.log(config.validCurrentPos);
 
     function generate_map(myOptions, canvasId) {
         // GOOGLE MAPS FUNCTIES
