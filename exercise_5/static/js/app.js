@@ -19,7 +19,6 @@
             var sectionList = document.querySelectorAll("section");
 
             sectionList.forEach(function (sec) {
-                console.log(sec.id);
                 if (location.hash === "#" + sec.id) {
                     sec.classList.add("active");
                     document.querySelector("a[href='#" + sec.id + "']").classList.add("active");
