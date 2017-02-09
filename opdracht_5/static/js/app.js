@@ -2,13 +2,13 @@
 (function () {
     "use strict";
     var app = {
-        init: function (routes, sections, window) {
-            routes.init(sections, window);
+        init: function () { // Omdat alles in de iffe zit, hoef je de andere object methods niet als argument mee te geven? 
+            routes.init();
         }
     };
     var routes = {
-        init: function (sections, window) {
-            window.onhashchange = function () {
+        init: function () {
+            window.onhashchange = function () { // window is altijd beschikbaar toch? 
                 sections.toggle();
             };
         }
@@ -31,5 +31,5 @@
             });
         }
     };
-    app.init(routes, sections, window);
+    app.init(); // Ook hier geen parameters toch? 
 }());
