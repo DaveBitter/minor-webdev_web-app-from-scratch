@@ -1,4 +1,4 @@
-# Minor WebDev | CSS To The Rescue
+# Minor WebDev | Web App From Scratch
 Dave Bitter | 500710907
 ## Exercise 1
 [Exercise 1](exercise_1/)
