@@ -1,5 +1,6 @@
 # Minor WebDev | Web App From Scratch
 Dave Bitter | 500710907
+
     V 1.0.2
 
 ## General
