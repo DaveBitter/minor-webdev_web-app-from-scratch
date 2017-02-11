@@ -9,14 +9,14 @@ All exercise folders are standalone projects and work as such. You can navigate 
 ## Issues
 I highly encourage adding issues to this repo in the case of finding one. I'm always up for improving my code.
 
-
-## Exercise 1
+## Navigation
+### Exercise 1
 [Exercise 1](exercise_1/)
-## Exercise 2
+### Exercise 2
 [Exercise 2](exercise_2/)
-## Exercise 3
+### Exercise 3
 [Exercise 3](exercise_3/)
-## Exercise 4
+### Exercise 4
 [Exercise 4](exercise_4/)
-## Exercise 5
+### Exercise 5
 [Exercise 5](exercise_5/)
