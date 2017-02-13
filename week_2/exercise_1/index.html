@@ -6,79 +6,107 @@
                 Exercise 1 | Ajax API call
             </title>
         </meta>
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
             <link href="static/css/main.css" rel="stylesheet" type="text/css">
             </link>
         </link>
     </head>
     <body>
-        <main>
+        <header>
             <h1>
-                Verhalen
+                What Movie To Watch?
             </h1>
-            <!-- HTML will be injected here -->
+            <h2>
+                By Dave Bitter
+            </h2>
+        </header>
+        <main>
+            <section id="movies">
+            </section>
+            <section id="movie">
+            </section>
         </main>
-         <script src="static/js/aja.js" type="text/javascript">
+        <script src="static/js/aja.js" type="text/javascript">
+        </script>
+        <script src="static/js/routie.js" type="text/javascript">
         </script>
         <!-- Handlebars script template -->
         <script src="static/js/handlebars.js" type="text/javascript">
         </script>
-        <script id="template" type="text/x-handlebars-template">
-            <article class="entry">
-    <h1>{{titel}} <em>({{verhaalnr}})</em></h1>
-
-    <footer>
-      <dl>
-      	{{#if sfeerwoord}}
-        <dt>Sfeerwoord</dt>
-        <dd>{{sfeerwoord}}</dd>
-        {{/if}}
-
-        {{#if tags}}
-        <dt>Tags</dt>
-        <dd>{{tags}}</dd>
-        {{/if}}
-
-        {{#if color_one}}
-        <dt>Kleur 1</dt>
-        <dd class="color">{{color_one}} <span style="background: {{color_one}}"></span></dd>
-        {{/if}}
-
-        {{#if color_two}}
-        <dt>Kleur 2</dt>
-        <dd class="color">{{color_two}} <span style="background: {{color_two}}"></dd>
-        {{/if}}
-
-        {{#if color_three}}
-        <dt>Kleur 3</dt>
-        <dd class="color">{{color_three}} <span style="background: {{color_three}}"></dd>
-        {{/if}}
-
-        {{#if typeDisplay}}
-        <dt>Type Display</dt>
-        <dd>{{typeDisplay}}</dd>
-        {{/if}}
-
-        {{#if typeCopyText}}
-        <dt>Type Copytext</dt>
-        <dd>{{typeCopyText}}</dd>
-        {{/if}}
-
-        {{#if fontRatio}}
-        <dt>Font Ratio</dt>
-        <dd>{{fontRatio}}</dd>
-        {{/if}}
-      </dl>
-		</footer>
-
-    <ul>
-			<li><img src="http://blokweb.jstur.org/uploads/{{imgSmall}}"></li>
-    	<li><img src="http://blokweb.jstur.org/uploads/{{imgMedium}}"></li>
-    	<li><img src="http://blokweb.jstur.org/uploads/{{imgLarge}}"></li>
-    </ul>
-  </article>
-        </script>
         <script src="static/js/app.js" type="text/javascript">
+        </script>
+        <script id="template" type="text/x-handlebars-template">
+            <article>
+	            {{#if title}}
+
+			<a href="#movie/{{id}}"}>
+				<h1>{{title}}</h1>
+			</a>
+		{{/if}}
+		{{#if tagline}}
+			<sup>{{tagline}}</sup>
+		{{/if}}
+		{{#if poster_path}}
+			<img src={{poster_path}}>
+		{{/if}}
+		{{#if overview}}
+			<p>{{overview}}</p>
+		{{/if}}
+
+		<a class="align-right" href="#movie/{{id}}"}>
+				<p>More info</p>
+			</a>
+	        </article>
+        </script>
+        <script id="detailtemplate" type="text/x-handlebars-template">
+            <article>
+	            {{#if title}}
+
+			<a href="#movie/{{id}}"}>
+				<h1>{{title}}</h1>
+			</a>
+		{{/if}}
+		{{#if tagline}}
+			<sup>{{tagline}}</sup>
+		{{/if}}
+		{{#if poster_path}}
+			<img src={{poster_path}}>
+		{{/if}}
+		{{#if overview}}
+			<p>{{overview}}</p>
+		{{/if}}
+
+		<h2>Facts</h2>
+		<ul>
+			{{#if budget}}
+				<li>
+					<h3>Budget</h3>
+					<p>{{budget}}</p></li>
+			{{/if}}
+
+			{{#if release_date}}
+				<li>
+					<h3>Release date</h3>
+					<p>{{release_date}}</p></li>
+			{{/if}}
+
+			{{#if revenue}}
+				<li>
+					<h3>Revenue (USD)</h3>
+					<p>$ {{revenue}}</p></li>
+			{{/if}}
+
+			{{#if runtime}}
+				<li>
+					<h3>Runtime (minutes)</h3>
+					<p>{{runtime}}</p></li>
+			{{/if}}
+		</ul>
+
+
+
+	        </article>
         </script>
     </body>
 </html>
