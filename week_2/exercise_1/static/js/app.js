@@ -6,6 +6,7 @@
             ALL: 'genre/10751/movies',
             RANDOM: '',
         },
+        totalSpan: 0,
         IMAGEPATH: 'http://image.tmdb.org/t/p/w500/'
     }
     var cachePosition = 0;
@@ -32,7 +33,7 @@
     // get data
     var getData = function(url) {
         aja().url(url).on('success', function(data) {
-            data.poster_path = config.IMAGEPATH + data.poster_path
+            data.poster_path = buildPosterPath(data.poster_path);
             cacheResults.push(data)
             data.stars = getStars(data.vote_average, 10)
             data = ['title', 'poster_path', 'stars', 'vote_count', 'id'].reduce(function(o, k) {
@@ -46,14 +47,14 @@
         var queryUrl = "";
         if (type === "all") {
             queryUrl = config.QUERY.ALL;
+            getTotalSpan(config.BASEURL + queryUrl + config.APIKEY)
         }
         if (type === "random") {
             document.querySelector('#movies').classList.remove('hide')
             document.querySelector('#movie').classList.add('hide')
             window.scrollTo(0, cachePosition);
             for (i = 0; i < 25; i++) {
-                var MAX = 5;
-                var randomMovieId = randomNum(1000, MAX);
+                var randomMovieId = randomNum(0, config.totalSpan);
                 queryUrl = config.QUERY.RANDOM;
                 queryUrl = config.QUERY.RANDOM = 'movie/' + randomMovieId
                 getData(config.BASEURL + queryUrl + config.APIKEY)
@@ -61,6 +62,7 @@
             return;
         }
         if (type === "detail") {
+            cachePosition = (window.pageYOffset);
             document.querySelector('#movies').classList.add('hide')
             document.querySelector('#movie').classList.remove('hide')
             document.querySelector('#movie').innerHTML = ''
@@ -70,7 +72,24 @@
             renderDetail(detailData);
             return
         }
-        getData(config.BASEURL + queryUrl + config.APIKEY)
+    }
+
+    var buildPosterPath = function (poster_path) {
+        console.log(poster_path)
+        if (typeof poster_path === 'undefined' || poster_path === null) {
+            poster_path = "static/images/poster.jpg"
+        } else {
+            poster_path = config.IMAGEPATH + poster_path
+        }
+        console.log(poster_path)
+        return poster_path;
+    }
+    var getTotalSpan = function() {
+        var url = config.BASEURL + config.QUERY.ALL + config.APIKEY;
+        aja().url(url).on('success', function(data) {
+            config.totalSpan = data.total_results;
+            buildUrl("random")
+        }).go();
     }
     var randomNum = function(min, max) {
         return Math.floor(Math.random() * ((max - min) + 1) + min);
@@ -86,19 +105,17 @@
         'all': function() {
             buildUrl("all");
         },
-        'random': function() {
-            buildUrl("random");
+        '': function() {
+            getTotalSpan("random");
         },
         'movie/:id': function(id) {
             buildUrl("detail", id);
         }
     });
     window.addEventListener('scroll', function() {
-        cachePosition = (window.pageYOffset);
         var topDoc = (window.pageYOffset);
         var topLoadmore = cumulativeOffset(loadmore);
-        console.log(topDoc, topLoadmore)
-        if (topLoadmore.top - topDoc < 1200 && window.location.hash === '#random') {
+        if (topLoadmore.top - topDoc < 1200 && window.location.hash === '') {
             buildUrl("random")
         }
     });

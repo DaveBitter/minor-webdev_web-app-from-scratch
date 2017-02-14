@@ -10,7 +10,7 @@ body {
     margin: 0;
 }
 
-body > header {
+body>header {
     background-color: #DE1B1B;
     color: #fff;
     width: 100%;
@@ -21,7 +21,7 @@ body > header {
     box-sizing: border-box;
 }
 
-body > header>* {
+body>header>* {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: .3rem;
@@ -62,6 +62,12 @@ article p {
     max-width: 30rem;
 }
 
+#movie article {
+    animation-name: bounceIn;
+    animation-duration: .3s;
+    animation-fill-mode: both;
+}
+
 #movie .content {
     display: flex;
     flex-direction: column;
@@ -83,7 +89,7 @@ article {
 }
 
 .rating i {
-  color: #DE1B1B;
+    color: #DE1B1B;
 }
 
 ul {
@@ -100,7 +106,7 @@ ul li {
 }
 
 @media(min-width:40rem) {
-    body > header {
+    body>header {
         text-align: left;
         padding-left: 1rem;
     }
@@ -121,7 +127,7 @@ ul li {
 }
 
 sup {
-  display: block;
+    display: block;
     text-align: center;
     margin: 1rem 0;
     font-style: italic;
@@ -149,4 +155,38 @@ article {
 
 .hide {
     display: none;
+}
+
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+/*
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+*/
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
 }
