@@ -19,7 +19,6 @@ body > header {
     margin: 0;
     margin-bottom: 1rem;
     box-sizing: border-box;
-    height: 2.5rem;
 }
 
 body > header>* {
