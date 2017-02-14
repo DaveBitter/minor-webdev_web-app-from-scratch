@@ -8,6 +8,7 @@
         },
         IMAGEPATH: 'http://image.tmdb.org/t/p/w500/'
     }
+    var cachePosition = 0;
     var cacheResults = []
     // renderAll data
     var renderAll = function(data) {
@@ -19,7 +20,7 @@
         html = compile(data);
         movies.innerHTML += html;
     }
-     var renderDetail = function(data) {
+    var renderDetail = function(data) {
         var movies = document.querySelector('#movie'),
             template = document.querySelector('#detailtemplate'),
             source = template.innerHTML,
@@ -28,13 +29,13 @@
         html = compile(data);
         movies.innerHTML += html;
     }
-
     // get data
     var getData = function(url) {
         aja().url(url).on('success', function(data) {
             data.poster_path = config.IMAGEPATH + data.poster_path
             cacheResults.push(data)
-            data = ['title', 'poster_path', 'overview', 'id'].reduce(function(o, k) {
+            data.stars = getStars(data.vote_average, 10)
+            data = ['title', 'poster_path', 'stars', 'vote_count', 'id'].reduce(function(o, k) {
                 o[k] = data[k];
                 return o;
             }, {});
@@ -47,9 +48,10 @@
             queryUrl = config.QUERY.ALL;
         }
         if (type === "random") {
-            document.querySelector('#movie').innerHTML = ''
-            cacheResults = []
-            for (i = 0; i < 5; i++) {
+            document.querySelector('#movies').classList.remove('hide')
+            document.querySelector('#movie').classList.add('hide')
+            window.scrollTo(0, cachePosition);
+            for (i = 0; i < 25; i++) {
                 var MAX = 5;
                 var randomMovieId = randomNum(1000, MAX);
                 queryUrl = config.QUERY.RANDOM;
@@ -59,7 +61,9 @@
             return;
         }
         if (type === "detail") {
-            document.querySelector('#movies').innerHTML = ''
+            document.querySelector('#movies').classList.add('hide')
+            document.querySelector('#movie').classList.remove('hide')
+            document.querySelector('#movie').innerHTML = ''
             var detailData = cacheResults.find(function(result) {
                 return result.id == id
             });
@@ -70,6 +74,13 @@
     }
     var randomNum = function(min, max) {
         return Math.floor(Math.random() * ((max - min) + 1) + min);
+    }
+    var getStars = function(value, max) {
+        var stars = [];
+        for (i = 0; i < Math.floor((value / 10) * 5); i++) {
+            stars.push("*");
+        }
+        return stars;
     }
     routie({
         'all': function() {
@@ -82,6 +93,28 @@
             buildUrl("detail", id);
         }
     });
+    window.addEventListener('scroll', function() {
+        cachePosition = (window.pageYOffset);
+        var topDoc = (window.pageYOffset);
+        var topLoadmore = cumulativeOffset(loadmore);
+        console.log(topDoc, topLoadmore)
+        if (topLoadmore.top - topDoc < 1200 && window.location.hash === '#random') {
+            buildUrl("random")
+        }
+    });
+    var cumulativeOffset = function(element) {
+        var top = 0,
+            left = 0;
+        do {
+            top += element.offsetTop || 0;
+            left += element.offsetLeft || 0;
+            element = element.offsetParent;
+        } while (element);
+        return {
+            top: top,
+            left: left
+        };
+    };
 })();
 // MICROLIBS:
 // Handlebars (http://handlebarsjs.com/)

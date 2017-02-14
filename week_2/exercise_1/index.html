@@ -6,26 +6,28 @@
                 Exercise 1 | Ajax API call
             </title>
         </meta>
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
             <link href="static/css/main.css" rel="stylesheet" type="text/css">
             </link>
         </link>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <header>
             <h1>
+            <i class="fa fa-ticket" aria-hidden="true"></i>
+
                 What Movie To Watch?
             </h1>
-            <h2>
-                By Dave Bitter
-            </h2>
+
         </header>
         <main>
             <section id="movies">
             </section>
             <section id="movie">
             </section>
+            <div id="loadmore">
+            </div>
         </main>
         <script src="static/js/aja.js" type="text/javascript">
         </script>
@@ -38,71 +40,85 @@
         </script>
         <script id="template" type="text/x-handlebars-template">
             <article>
-	            {{#if title}}
+		<a href="#movie/{{id}}"}>
+		            {{#if title}}
 
-			<a href="#movie/{{id}}"}>
 				<h1>{{title}}</h1>
-			</a>
-		{{/if}}
-		{{#if tagline}}
-			<sup>{{tagline}}</sup>
-		{{/if}}
-		{{#if poster_path}}
-			<img src={{poster_path}}>
-		{{/if}}
-		{{#if overview}}
-			<p>{{overview}}</p>
-		{{/if}}
+			{{/if}}
+			{{#if tagline}}
+				<sup>{{tagline}}</sup>
+			{{/if}}
+			{{#if poster_path}}
+				<img src={{poster_path}}>
+			{{/if}}
+			{{#if stars}}
+				<div class="rating">
+					{{#each stars}}
+						<i class="fa fa-star" aria-hidden="true"></i>
+					{{/each}}
+					({{vote_count}}votes)
+				</div>
+			{{/if}}
 
-		<a class="align-right" href="#movie/{{id}}"}>
-				<p>More info</p>
-			</a>
-	        </article>
+		</a>
+        </article>
         </script>
         <script id="detailtemplate" type="text/x-handlebars-template">
             <article>
-	            {{#if title}}
+	            <header>
+		            {{#if title}}
 
-			<a href="#movie/{{id}}"}>
-				<h1>{{title}}</h1>
-			</a>
-		{{/if}}
-		{{#if tagline}}
-			<sup>{{tagline}}</sup>
-		{{/if}}
-		{{#if poster_path}}
-			<img src={{poster_path}}>
-		{{/if}}
-		{{#if overview}}
-			<p>{{overview}}</p>
-		{{/if}}
-
-		<h2>Facts</h2>
-		<ul>
-			{{#if budget}}
-				<li>
-					<h3>Budget</h3>
-					<p>{{budget}}</p></li>
+				<a href="#movie/{{id}}"}>
+					<h1>{{title}}</h1>
+				</a>
+			{{/if}}
+			{{#if tagline}}
+				<sup>{{tagline}}</sup>
 			{{/if}}
 
-			{{#if release_date}}
-				<li>
-					<h3>Release date</h3>
-					<p>{{release_date}}</p></li>
+	            </header>
+	            <div class="content">
+			{{#if poster_path}}
+				<img src={{poster_path}}>
 			{{/if}}
+		            <div class="info">
+				{{#if overview}}
+					<p>{{overview}}</p>
+				{{/if}}
 
-			{{#if revenue}}
-				<li>
-					<h3>Revenue (USD)</h3>
-					<p>$ {{revenue}}</p></li>
-			{{/if}}
+				<ul>
+					{{#if budget}}
+						<li>
+							<h3><i class="fa fa-money" aria-hidden="true"></i>
+Budget</h3>
+							<p>{{budget}}</p></li>
+					{{/if}}
 
-			{{#if runtime}}
-				<li>
-					<h3>Runtime (minutes)</h3>
-					<p>{{runtime}}</p></li>
-			{{/if}}
-		</ul>
+					{{#if release_date}}
+						<li>
+							<h3><i class="fa fa-calendar" aria-hidden="true"></i>
+Release date</h3>
+							<p>{{release_date}}</p></li>
+					{{/if}}
+
+					{{#if revenue}}
+						<li>
+							<h3><i class="fa fa-credit-card" aria-hidden="true"></i>
+Revenue (USD)</h3>
+							<p>$ {{revenue}}</p></li>
+					{{/if}}
+
+					{{#if runtime}}
+						<li>
+							<h3><i class="fa fa-clock-o" aria-hidden="true"></i>
+Runtime (minutes)</h3>
+							<p>{{runtime}}</p></li>
+					{{/if}}
+				</ul>
+
+	            </div>
+	            </div>
+
 
 
 
