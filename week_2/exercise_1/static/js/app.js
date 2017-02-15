@@ -183,6 +183,7 @@
 
         // check if more items should be loaded
         if (topLoadmore.top - topDoc < 1200 && window.location.hash === '') {
+            cache.position = (window.pageYOffset);
             buildUrl("random")
         }
     });
