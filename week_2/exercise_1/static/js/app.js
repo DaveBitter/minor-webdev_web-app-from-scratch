@@ -9,8 +9,11 @@
         totalSpan: 0,
         IMAGEPATH: 'http://image.tmdb.org/t/p/w500/'
     }
-    var cachePosition = 0;
-    var cacheResults = []
+    var cache = {
+        position: 0,
+        results: []
+    }
+
     // renderAll data
     var renderAll = function(data) {
         var movies = document.querySelector('#movies'),
@@ -29,18 +32,17 @@
             html = ''
         html = compile(data);
         movies.innerHTML += html;
+
     }
     // get data
     var getData = function(url) {
         aja().url(url).on('error', function() {
-            console.log("ERRRIRIR")
             return
         }).on('success', function(data) {
-            console.log(data)
             data.budget = accounting.formatMoney(data.budget)
             data.revenue = accounting.formatMoney(data.revenue)
             data.poster_path = buildPosterPath(data.poster_path);
-            cacheResults.push(data)
+            cache.results.push(data)
             data.stars = getStars(data.vote_average, 10)
             data.imdb_link = buildImdbLink(data.imdb_id)
             data = ['title', 'poster_path', 'stars', 'vote_count', 'imdb_link' ,'id'].reduce(function(o, k) {
@@ -59,7 +61,7 @@
         if (type === "random") {
             document.querySelector('#movies').classList.remove('hide')
             document.querySelector('#movie').classList.add('hide')
-            window.scrollTo(0, cachePosition);
+            window.scrollTo(0, cache.position);
             for (i = 0; i < 25; i++) {
                 var randomMovieId = randomNum(0, config.totalSpan);
                 queryUrl = config.QUERY.RANDOM;
@@ -69,11 +71,11 @@
             return;
         }
         if (type === "detail") {
-            cachePosition = (window.pageYOffset);
+            cache.position = (window.pageYOffset);
             document.querySelector('#movies').classList.add('hide')
             document.querySelector('#movie').classList.remove('hide')
             document.querySelector('#movie').innerHTML = ''
-            var detailData = cacheResults.find(function(result) {
+            var detailData = cache.results.find(function(result) {
                 return result.id == id
             });
             renderDetail(detailData);
@@ -120,7 +122,6 @@
         }
     });
     window.addEventListener('scroll', function() {
-        cachePosition = (window.pageYOffset)
         var topDoc = (window.pageYOffset);
         var topLoadmore = cumulativeOffset(loadmore);
         if (topLoadmore.top - topDoc < 1200 && window.location.hash === '') {
