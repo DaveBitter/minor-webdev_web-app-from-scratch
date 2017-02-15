@@ -6,6 +6,10 @@
         QUERY: {
             ALL: 'genre/10751/movies',
             RANDOM: '',
+            FILTER: {
+                POPULAIR: '&sort_by=popularity.desc',
+                RATED: '&sort_by=vote_average.desc'
+            }
         },
         totalSpan: 0,
         IMAGEPATH: 'http://image.tmdb.org/t/p/w500/'
@@ -44,24 +48,35 @@
         aja().url(url).on('error', function() {
             return
         }).on('success', function(data) {
+            var dataToRender = []
+
+            dataToRender.push(data);
+
+            if (typeof data.total_results !== 'undefined'){
+                dataToRender = data.results
+            }
+
+            dataToRender.forEach(function(movie) {
+                movie.budget = accounting.formatMoney(movie.budget)
+                movie.revenue = accounting.formatMoney(movie.revenue)
+                movie.poster_path = buildPosterPath(movie.poster_path);
+                movie.stars = getStars(movie.vote_average, 10)
+                movie.imdb_link = buildImdbLink(movie.imdb_id)
+
+                // storing movie in cache in order to use it later on
+                cache.results.push(movie)
+
+                // reducing of the properties of movie to the minumum required by the front-end
+                movie = ['title', 'poster_path', 'stars', 'vote_count', 'imdb_link', 'id'].reduce(function(o, k) {
+                    o[k] = movie[k];
+                    return o;
+                }, {});
+
+                // render the overview page
+                renderAll(movie);
+
+            });
             //  manuipulating data to use in the front-end
-            data.budget = accounting.formatMoney(data.budget)
-            data.revenue = accounting.formatMoney(data.revenue)
-            data.poster_path = buildPosterPath(data.poster_path);
-            data.stars = getStars(data.vote_average, 10)
-            data.imdb_link = buildImdbLink(data.imdb_id)
-
-            // storing data in cache in order to use it later on
-            cache.results.push(data)
-
-            // reducing of the properties of data to the minumum required by the front-end
-            data = ['title', 'poster_path', 'stars', 'vote_count', 'imdb_link', 'id'].reduce(function(o, k) {
-                o[k] = data[k];
-                return o;
-            }, {});
-
-            // render the overview page
-            renderAll(data);
         }).go();
     }
 
@@ -91,6 +106,21 @@
             return;
         }
 
+        // build the url for the query for the genrepage
+        if (type === "filter") {
+            switch(id) {
+                case "populair":
+                    queryUrl = config.QUERY.FILTER.POPULAR
+                    break;
+                case "rated":
+                    queryUrl = config.QUERY.FILTER.RATED
+                    break;
+
+
+            }
+            getData(config.BASEURL + 'discover/movie' + config.APIKEY + queryUrl)
+        }
+
         // get all the data from the required movie out of the cached movies
         if (type === "detail") {
             // cache the current position on the page for when you return from the detailpage
@@ -117,6 +147,15 @@
             poster_path = config.IMAGEPATH + poster_path
         }
         return poster_path;
+    }
+
+     // get total span of movies in the database (to know the bounds for the random movie)
+    var getPagesSpan = function(genre) {
+        var url = config.BASEURL + config.QUERY.ALL + config.APIKEY;
+        aja().url(url).on('success', function(data) {
+            config.totalSpan = data.total_results;
+            buildUrl("random")
+        }).go();
     }
 
     // get total span of movies in the database (to know the bounds for the random movie)
@@ -170,8 +209,11 @@
         '': function() {
             getTotalSpan("random");
         },
+        'filter/:id': function(id) {
+            buildUrl("filter", id);
+        },
         'movie/:id': function(id) {
-            buildUrl("detail", id);;
+            buildUrl("detail", id);
         }
     });
 

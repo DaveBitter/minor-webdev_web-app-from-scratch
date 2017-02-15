@@ -21,6 +21,17 @@
 
                 What Movie To Watch?
             </h1>
+            <ul>
+            		<li>
+            			<a href="">random</a>
+            		</li>
+            		<li>
+            			<a href="#filter/popular">popular</a>
+            		</li>
+            		<li>
+            			<a href="#filter/rated">rated</a>
+            		</li>
+            </ul>
 
         </header>
         <main>
@@ -95,7 +106,7 @@
 					{{#if budget}}
 						<li>
 							<h4><i class="fa fa-money" aria-hidden="true"></i>
-Budget</h4>
+Budget (USD)</h4>
 							<p>{{budget}}</p></li>
 					{{/if}}
 
@@ -104,7 +115,7 @@ Budget</h4>
 						<li>
 							<h4><i class="fa fa-credit-card" aria-hidden="true"></i>
 Revenue (USD)</h4>
-							<p>$ {{revenue}}</p></li>
+							<p>{{revenue}}</p></li>
 					{{/if}}
 
 					{{#if release_date}}
@@ -116,8 +127,8 @@ Release date</h4>
 					{{#if runtime}}
 						<li>
 							<h4><i class="fa fa-clock-o" aria-hidden="true"></i>
-Runtime (minutes)</h4>
-							<p>{{runtime}}</p></li>
+Runtime</h4>
+							<p>{{runtime}} minutes</p></li>
 					{{/if}}
 					{{#if imdb_link}}
 						<li>
