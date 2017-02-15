@@ -35,6 +35,8 @@
         </script>
         <script src="static/js/routie.js" type="text/javascript">
         </script>
+        <script src="static/js/accounting.js" type="text/javascript">
+        </script>
         <!-- Handlebars script template -->
         <script src="static/js/handlebars.js" type="text/javascript">
         </script>
@@ -61,7 +63,6 @@
 					 ({{vote_count}} votes)
 				</div>
 			{{/if}}
-
 		</a>
         </article>
         </script>
@@ -79,42 +80,50 @@
 			{{/if}}
 
 	            </header>
+	            <hr />
 	            <div class="content">
 			{{#if poster_path}}
 				<img src={{poster_path}}>
 			{{/if}}
 		            <div class="info">
 				{{#if overview}}
+					<h3>Summary</h3>
 					<p>{{overview}}</p>
 				{{/if}}
 
 				<ul>
 					{{#if budget}}
 						<li>
-							<h3><i class="fa fa-money" aria-hidden="true"></i>
-Budget</h3>
+							<h4><i class="fa fa-money" aria-hidden="true"></i>
+Budget</h4>
 							<p>{{budget}}</p></li>
+					{{/if}}
+
+
+					{{#if revenue}}
+						<li>
+							<h4><i class="fa fa-credit-card" aria-hidden="true"></i>
+Revenue (USD)</h4>
+							<p>$ {{revenue}}</p></li>
 					{{/if}}
 
 					{{#if release_date}}
 						<li>
-							<h3><i class="fa fa-calendar" aria-hidden="true"></i>
-Release date</h3>
+							<h4><i class="fa fa-calendar" aria-hidden="true"></i>
+Release date</h4>
 							<p>{{release_date}}</p></li>
 					{{/if}}
-
-					{{#if revenue}}
-						<li>
-							<h3><i class="fa fa-credit-card" aria-hidden="true"></i>
-Revenue (USD)</h3>
-							<p>$ {{revenue}}</p></li>
-					{{/if}}
-
 					{{#if runtime}}
 						<li>
-							<h3><i class="fa fa-clock-o" aria-hidden="true"></i>
-Runtime (minutes)</h3>
+							<h4><i class="fa fa-clock-o" aria-hidden="true"></i>
+Runtime (minutes)</h4>
 							<p>{{runtime}}</p></li>
+					{{/if}}
+					{{#if imdb_link}}
+						<li>
+							<h4><i class="fa fa-imdb" aria-hidden="true"></i> Check on IMDB</h4>
+							<a href={{imdb_link}} target="_blank">{{imdb_link}}</a>
+						</li>
 					{{/if}}
 				</ul>
 

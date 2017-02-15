@@ -32,11 +32,18 @@
     }
     // get data
     var getData = function(url) {
-        aja().url(url).on('success', function(data) {
+        aja().url(url).on('error', function() {
+            console.log("ERRRIRIR")
+            return
+        }).on('success', function(data) {
+            console.log(data)
+            data.budget = accounting.formatMoney(data.budget)
+            data.revenue = accounting.formatMoney(data.revenue)
             data.poster_path = buildPosterPath(data.poster_path);
             cacheResults.push(data)
             data.stars = getStars(data.vote_average, 10)
-            data = ['title', 'poster_path', 'stars', 'vote_count', 'id'].reduce(function(o, k) {
+            data.imdb_link = buildImdbLink(data.imdb_id)
+            data = ['title', 'poster_path', 'stars', 'vote_count', 'imdb_link' ,'id'].reduce(function(o, k) {
                 o[k] = data[k];
                 return o;
             }, {});
@@ -73,15 +80,12 @@
             return
         }
     }
-
-    var buildPosterPath = function (poster_path) {
-        console.log(poster_path)
+    var buildPosterPath = function(poster_path) {
         if (typeof poster_path === 'undefined' || poster_path === null) {
             poster_path = "static/images/poster.jpg"
         } else {
             poster_path = config.IMAGEPATH + poster_path
         }
-        console.log(poster_path)
         return poster_path;
     }
     var getTotalSpan = function() {
@@ -101,6 +105,9 @@
         }
         return stars;
     }
+    var buildImdbLink = function(imdb_id) {
+        return('http://imdb.com/title/' + imdb_id)
+    }
     routie({
         'all': function() {
             buildUrl("all");
@@ -109,10 +116,11 @@
             getTotalSpan("random");
         },
         'movie/:id': function(id) {
-            buildUrl("detail", id);
+            buildUrl("detail", id);;
         }
     });
     window.addEventListener('scroll', function() {
+        cachePosition = (window.pageYOffset)
         var topDoc = (window.pageYOffset);
         var topLoadmore = cumulativeOffset(loadmore);
         if (topLoadmore.top - topDoc < 1200 && window.location.hash === '') {
