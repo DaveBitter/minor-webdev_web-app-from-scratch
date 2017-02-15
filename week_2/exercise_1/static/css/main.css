@@ -3,7 +3,7 @@
 }
 
 body {
-    background: #f3f3f3;
+    background: #fff;
     font-family: 'Lato', sans-serif;
     color: #666;
     padding: 0;
@@ -48,19 +48,14 @@ section article {
 }
 
 a {
-    color: #DE1B1B;
+    color: #666;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
 }
 
-/*section article a {
-    color: #666;
-    text-align: center;
-}*/
-
 article img {
-    max-width: 100%;
+    width: 100%;
 }
 
 article p {
@@ -76,6 +71,10 @@ article p {
 #movie .content {
     display: flex;
     flex-direction: column;
+}
+
+#movie a {
+  color: #DE1B1B;
 }
 
 article {
@@ -94,7 +93,7 @@ article {
     float: right;
 }
 
-.rating i {
+ i.fa {
     color: #DE1B1B;
 }
 
