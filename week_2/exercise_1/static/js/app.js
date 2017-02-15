@@ -1,3 +1,8 @@
+var worker = new Worker('js/task.js')
+   worker.onmessage = function (event) {
+     document.getElementById('result').textContent = event.data;
+   };
+
 (function() {
     // Config information
     var config = {
