@@ -17,10 +17,11 @@
     <body>
         <header>
             <h1>
-            <i class="fa fa-ticket" aria-hidden="true"></i>
-
+            	<i class="fa fa-ticket" aria-hidden="true"></i>
                 What Movie To Watch?
             </h1>
+            <p>
+ A true random movie finder</p>
 
         </header>
         <main>
@@ -71,9 +72,7 @@
 	            <header>
 		            {{#if title}}
 
-				<a href="#movie/{{id}}"}>
-					<h1>{{title}}</h1>
-				</a>
+				<h1>{{title}}</h1>
 			{{/if}}
 			{{#if tagline}}
 				<sup>{{tagline}}</sup>
@@ -95,7 +94,7 @@
 					{{#if budget}}
 						<li>
 							<h4><i class="fa fa-money" aria-hidden="true"></i>
-Budget</h4>
+Budget (USD)</h4>
 							<p>{{budget}}</p></li>
 					{{/if}}
 
@@ -104,7 +103,7 @@ Budget</h4>
 						<li>
 							<h4><i class="fa fa-credit-card" aria-hidden="true"></i>
 Revenue (USD)</h4>
-							<p>$ {{revenue}}</p></li>
+							<p>{{revenue}}</p></li>
 					{{/if}}
 
 					{{#if release_date}}
@@ -116,8 +115,8 @@ Release date</h4>
 					{{#if runtime}}
 						<li>
 							<h4><i class="fa fa-clock-o" aria-hidden="true"></i>
-Runtime (minutes)</h4>
-							<p>{{runtime}}</p></li>
+Runtime</h4>
+							<p>{{runtime}} minutes</p></li>
 					{{/if}}
 					{{#if imdb_link}}
 						<li>
