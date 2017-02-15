@@ -1,3 +1,0 @@
-# Which version do you want?
-
-I used the [JS file in this folder](static/js) to create a single page app out of exercise 5 of CSS To The Rescue. The file is slightly expanded to have extra functionality and can be found [here](https://github.com/DaveBitter/minor-webdev_css-to-the-rescue/tree/master/exercise_1/_site/assets/js). You can see the functionality live in action [here](http://webdev.davebitter.com).
