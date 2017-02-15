@@ -10,8 +10,19 @@ body {
     margin: 0;
 }
 
+main {
+    max-width: 70rem;
+    margin: 0 auto;
+}
+
+body > header + * {
+    margin-top: 6rem;
+}
+
 body>header {
-    background-color: #DE1B1B;
+    position: fixed;
+    top: 0;
+    background-color: #FF6C6A;
     color: #fff;
     width: 100%;
     text-align: center;
@@ -21,13 +32,23 @@ body>header {
     box-sizing: border-box;
 }
 
-body>header>* {
+body>header i {
+    color: #fff;
+}
+
+body>header h1 {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: .3rem;
-    margin: 0 0 .5rem 0;
+    margin: .5rem 0 0 0;
     font-size: 1.2rem;
     line-height: 2rem;
+}
+
+body>header p {
+    margin: 0 0 .5rem 0;
+    font-size: .8rem;
+    font-style: italic;
 }
 
 section {
@@ -74,11 +95,15 @@ article p {
 }
 
 #movie a {
-  color: #DE1B1B;
+    color: #FF6C6A;
 }
 
 article {
     transition: .3s ease-in-out;
+}
+
+article h1 {
+    text-align: center;
 }
 
 #movie img {
@@ -93,13 +118,13 @@ article {
     float: right;
 }
 
- i.fa {
-    color: #DE1B1B;
+i {
+    color: #FF6C6A;
 }
 
 hr {
-  opacity: .2;
-  margin-bottom: 2rem;
+    opacity: .2;
+    margin-bottom: 2rem;
 }
 
 ul {
@@ -120,13 +145,16 @@ ul li {
         text-align: left;
         padding-left: 1rem;
     }
+    body>header p {
+        margin-left: 2rem;
+    }
     section article {
         margin: 2rem;
         width: calc(30% - 2rem);
     }
     #movie article {
         margin: 0 auto;
-        max-width: 80%;
+        max-width: 90%;
     }
     #movie .content {
         flex-direction: row;
@@ -149,14 +177,14 @@ sup {
         width: calc(20% - 2rem);
     }
     #movie article {
-        max-width: 50%;
+        max-width: 60%;
     }
 }
 
 article {
     background: #fff;
     border-radius: .2rem;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.19), 0 .6rem .6rem rgba(0, 0, 0, 0.23);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0), 0 .6rem .6rem rgba(0, 0, 0, 0.23);
 }
 
 .align-right {
@@ -167,17 +195,15 @@ article {
     display: none;
 }
 
-
 @keyframes bounceIn {
-  from, 20%, 40%, 60%, 80%, to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-
-  0% {
-    opacity: 0;
-    transform: scale3d(.3, .3, .3);
-  }
-/*
+    from, 20%, 40%, 60%, 80%, to {
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    0% {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3);
+    }
+    /*
   20% {
     transform: scale3d(1.1, 1.1, 1.1);
   }
@@ -186,17 +212,15 @@ article {
     transform: scale3d(.9, .9, .9);
   }
 */
-  60% {
-    opacity: 1;
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
-
-  80% {
-    transform: scale3d(.97, .97, .97);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
+    60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+        transform: scale3d(.97, .97, .97);
+    }
+    to {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
 }
