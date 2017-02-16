@@ -30,13 +30,19 @@
 
     //  render detailpage
     var renderDetail = function(data) {
+        var template = document.querySelector('#detailtemplate')
+
+        // redirect to home if no data is found
+        if(typeof template === 'undefined' || template === null) {
+            window.location.href = ('#')
+        }
         var movies = document.querySelector('#movie'),
-            template = document.querySelector('#detailtemplate'),
             source = template.innerHTML,
             compile = Handlebars.compile(source),
             html = ''
         html = compile(data);
         movies.innerHTML += html;
+
     }
 
     // get data from API
@@ -79,10 +85,11 @@
         if (type === "random") {
             document.querySelector('#movies').classList.remove('hide')
             document.querySelector('#movie').classList.add('hide')
+            document.querySelector('#back').classList.add('hide')
             window.scrollTo(0, cache.position);
 
             // add X amount of movies to the overviewpage
-            for (i = 0; i < 25; i++) {
+            for (i = 0; i < 30; i++) {
                 var randomMovieId = randomNum(0, config.totalSpan);
                 queryUrl = config.QUERY.RANDOM;
                 queryUrl = config.QUERY.RANDOM = 'movie/' + randomMovieId
@@ -95,6 +102,7 @@
         if (type === "detail") {
             document.querySelector('#movies').classList.add('hide')
             document.querySelector('#movie').classList.remove('hide')
+            document.querySelector('#back').classList.remove('hide')
             document.querySelector('#movie').innerHTML = ''
 
             // find the required movie
