@@ -93,8 +93,6 @@
 
         // get all the data from the required movie out of the cached movies
         if (type === "detail") {
-            // cache the current position on the page for when you return from the detailpage
-            cache.position = (window.pageYOffset);
             document.querySelector('#movies').classList.add('hide')
             document.querySelector('#movie').classList.remove('hide')
             document.querySelector('#movie').innerHTML = ''
@@ -171,15 +169,19 @@
             getTotalSpan("random");
         },
         'movie/:id': function(id) {
-            buildUrl("detail", id);;
+            buildUrl("detail", id);
         }
     });
 
     // check if the user scrolled to the bottom of the page (then add new items)
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function(e) {
         // get the top of the viewport (window) and the top of the load more element at the bottom of the page
         var topDoc = (window.pageYOffset);
         var topLoadmore = cumulativeOffset(loadmore);
+        if (window.location.hash === '') {
+            // cache the current position on the page for when you return from the detailpage
+            cache.position = (window.pageYOffset);
+        }
 
         // check if more items should be loaded
         if (topLoadmore.top - topDoc < 1200 && window.location.hash === '') {
