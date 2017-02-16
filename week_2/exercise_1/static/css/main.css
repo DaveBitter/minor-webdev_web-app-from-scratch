@@ -3,7 +3,7 @@
 }
 
 body {
-    background: #fff;
+    background: #222;
     font-family: 'Lato', sans-serif;
     color: #666;
     padding: 0;
@@ -15,14 +15,15 @@ main {
     margin: 0 auto;
 }
 
-body > header + * {
+body>header+* {
     margin-top: 6rem;
 }
 
 body>header {
+    z-index: 1000;
     position: fixed;
     top: 0;
-    background-color: #FF6C6A;
+    background-color: #ea4a48;
     color: #fff;
     width: 100%;
     text-align: center;
@@ -60,16 +61,17 @@ section {
 }
 
 section article {
+    background-color: #333;
     height: 100%;
     flex-grow: 1;
     margin: .5rem;
-    padding: 1rem;
+    padding: 1rem 0;
     width: calc(100% - .5rem);
     height: calc(100% - .5rem);
 }
 
 a {
-    color: #666;
+    color: #aaa;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
@@ -77,6 +79,20 @@ a {
 
 article img {
     width: 100%;
+    -webkit-filter: saturate(10%);
+    /* Safari 6.0 - 9.0 */
+    filter: saturate(10%);
+    -webkit-clip-path: polygon(0 0, 100% 1%, 100% 91%, 50% 100%, 0 91%);
+    clip-path: polygon(0 0, 100% 1%, 100% 91%, 50% 100%, 0 91%);
+    transition: .1s ease-in-out;
+}
+
+article img:hover {
+    -webkit-filter: saturate(50%);
+    /* Safari 6.0 - 9.0 */
+    filter: saturate(50%);
+    -webkit-clip-path: polygon(0 0, 100% 1%, 100% 95%, 50% 100%, 0 95%);
+    clip-path: polygon(0 0, 100% 1%, 100% 95%, 50% 100%, 0 95%);
 }
 
 article p {
@@ -95,7 +111,7 @@ article p {
 }
 
 #movie a {
-    color: #FF6C6A;
+    color: #ea4a48;
 }
 
 article {
@@ -116,10 +132,11 @@ article h1 {
 
 .rating {
     float: right;
+    padding-right: .5rem;
 }
 
 i {
-    color: #FF6C6A;
+    color: #ea4a48;
 }
 
 hr {
@@ -174,7 +191,7 @@ sup {
 @media(min-width:70rem) {
     section article {
         margin: 2rem;
-        width: calc(20% - 2rem);
+        width: calc(25% - 2rem);
     }
     #movie article {
         max-width: 60%;
@@ -185,6 +202,7 @@ article {
     background: #fff;
     border-radius: .2rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0), 0 .6rem .6rem rgba(0, 0, 0, 0.23);
+
 }
 
 .align-right {
