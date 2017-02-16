@@ -42,8 +42,9 @@ body>header h1 {
     text-transform: uppercase;
     letter-spacing: .3rem;
     margin: .5rem 0 0 0;
-    font-size: 1.2rem;
-    line-height: 2rem;
+    font-size: .9rem;
+    line-height: 1.2rem;
+    transition: .2s;
 }
 
 body>header p {
@@ -62,12 +63,10 @@ section {
 
 section article {
     background-color: #333;
-    height: 100%;
     flex-grow: 1;
-    margin: .5rem;
+    margin: .3rem;
     padding: 1rem 0;
-    width: calc(100% - .5rem);
-    height: calc(100% - .5rem);
+    width: calc(100% - .3rem);
 }
 
 a {
@@ -87,7 +86,7 @@ article img {
     transition: .1s ease-in-out;
 }
 
-article img:hover {
+#movies article img:hover {
     -webkit-filter: saturate(50%);
     /* Safari 6.0 - 9.0 */
     filter: saturate(50%);
@@ -151,10 +150,17 @@ ul {
 
 .content h4, .content h3, .content p {
     margin: 0 0 .1rem 0;
+    padding: .5rem;
 }
 
 ul li {
     margin: .8rem 0;
+}
+@media(min-width:30rem) {
+    section article {
+        margin: 0 3rem;
+        width: calc(100% - 3rem);
+    }
 }
 
 @media(min-width:40rem) {
@@ -162,12 +168,16 @@ ul li {
         text-align: left;
         padding-left: 1rem;
     }
+    body>header h1 {
+        font-size: 1.3rem;
+        line-height: 2rem;
+    }
     body>header p {
         margin-left: 2rem;
     }
     section article {
         margin: 2rem;
-        width: calc(30% - 2rem);
+        width: calc(25% - 2rem);
     }
     #movie article {
         margin: 0 auto;
@@ -180,6 +190,7 @@ ul li {
         margin-left: 2rem;
     }
 }
+
 
 sup {
     display: block;
@@ -202,7 +213,6 @@ article {
     background: #fff;
     border-radius: .2rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0), 0 .6rem .6rem rgba(0, 0, 0, 0.23);
-
 }
 
 .align-right {
