@@ -1,7 +1,7 @@
 # Minor WebDev | Web App From Scratch
 Dave Bitter | 500710907
 
-    V 1.0.6
+    V 1.0.7
 
 ## General
 This repository holds the seperate exercises for the course 'Web App From Scratch', part of the minor "Webdevelopment" at the [HvA](http://www.hva.nl/)
