@@ -48,6 +48,9 @@
         posterPath: function (path) {
             buildPosterPath (path);
         },
+        amount: function (amount) {
+            return parseAmount(amount);
+        },
         randomNum: function (min, max) {
             return randomNum(min, max);
         },
@@ -98,11 +101,8 @@
             return
         }).on('success', function(data) {
             //  manuipulating data to use in the front-end
-            // data.budget = accounting.formatMoney(data.budget)
-            data.budget = data.budget.toFixed(0).replace(/./g, function(c, i, a) {
-                return i && c !== "." && ((a.length - i) % 3 === 0) ? '.' + c : c;
-            });
-            data.revenue = accounting.formatMoney(data.revenue)
+            data.budget = construct.amount(data.budget);
+            data.revenue = construct.amount(data.revenue);
             data.poster_path = buildPosterPath(data.poster_path);
             data.stars = construct.stars(data.vote_average, 10)
             data.imdb_link = buildImdbLink(data.imdb_id)
@@ -174,6 +174,18 @@
             construct.url("random")
         }).go();
     }
+
+    // parse number to amount, comma seperated
+    var parseAmount = function(amount) {
+        amount = amount.toFixed(0).replace(/./g, function(c, i, a) {
+                return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+            });
+
+        amount = "$ " + amount;
+
+        return amount;
+    }
+
     // get random number between to values
     var randomNum = function(min, max) {
         return Math.floor(Math.random() * ((max - min) + 1) + min);
