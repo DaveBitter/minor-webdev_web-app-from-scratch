@@ -48,6 +48,9 @@
         posterPath: function (path) {
             buildPosterPath (path);
         },
+        amount: function (amount) {
+            return parseAmount(amount);
+        },
         randomNum: function (min, max) {
             return randomNum(min, max);
         },
@@ -98,8 +101,8 @@
             return
         }).on('success', function(data) {
             //  manuipulating data to use in the front-end
-            data.budget = accounting.formatMoney(data.budget)
-            data.revenue = accounting.formatMoney(data.revenue)
+            data.budget = construct.amount(data.budget);
+            data.revenue = construct.amount(data.revenue);
             data.poster_path = buildPosterPath(data.poster_path);
             data.stars = construct.stars(data.vote_average, 10)
             data.imdb_link = buildImdbLink(data.imdb_id)
@@ -118,37 +121,39 @@
     var buildUrl = function(type, id) {
         var queryUrl = "";
         // build the url for the query to get the amount of movies available
-        if (type === "all") {
-            queryUrl = app.config.QUERY.ALL;
-            getTotalSpan(app.config.BASEURL + queryUrl + app.config.APIKEY)
-        }
-        // build the url for the query for the overviewpage
-        if (type === "random") {
-            document.querySelector('#movies').classList.remove('hide')
-            document.querySelector('#movie').classList.add('hide')
-            document.querySelector('#back').classList.add('hide')
-            window.scrollTo(0, app.cache.position);
-            // add X amount of movies to the overviewpage
-            for (i = 0; i < 30; i++) {
-                var randomMovieId = construct.randomNum(0, app.config.totalSpan);
-                queryUrl = app.config.QUERY.RANDOM;
-                queryUrl = app.config.QUERY.RANDOM = 'movie/' + randomMovieId
-                data.get(app.config.BASEURL + queryUrl + app.config.APIKEY)
-            }
-            return;
-        }
-        // get all the data from the required movie out of the app.cached movies
-        if (type === "detail") {
-            document.querySelector('#movies').classList.add('hide')
-            document.querySelector('#movie').classList.remove('hide')
-            document.querySelector('#back').classList.remove('hide')
-            document.querySelector('#movie').innerHTML = ''
-            // find the required movie
-            var detailData = app.cache.results.find(function(result) {
-                return result.id == id
-            });
-            render.detail(detailData);
-            return
+        switch(type) {
+            case "all":
+                if (type === "all") {
+                    queryUrl = app.config.QUERY.ALL;
+                    getTotalSpan(app.config.BASEURL + queryUrl + app.config.APIKEY)
+                }
+                break;
+            case "random":
+                // build the url for the query for the overviewpage
+                document.querySelector('#movies').classList.remove('hide')
+                document.querySelector('#movie').classList.add('hide')
+                document.querySelector('#back').classList.add('hide')
+                window.scrollTo(0, app.cache.position);
+                // add X amount of movies to the overviewpage
+                for (i = 0; i < 30; i++) {
+                    var randomMovieId = construct.randomNum(0, app.config.totalSpan);
+                    queryUrl = app.config.QUERY.RANDOM;
+                    queryUrl = app.config.QUERY.RANDOM = 'movie/' + randomMovieId
+                    data.get(app.config.BASEURL + queryUrl + app.config.APIKEY)
+                }
+                break;
+            case "detail":
+                // get all the data from the required movie out of the app.cached movies
+                document.querySelector('#movies').classList.add('hide')
+                document.querySelector('#movie').classList.remove('hide')
+                document.querySelector('#back').classList.remove('hide')
+                document.querySelector('#movie').innerHTML = ''
+                // find the required movie
+                var detailData = app.cache.results.find(function(result) {
+                    return result.id == id
+                });
+                render.detail(detailData);
+                break;
         }
     }
     // build the full path for the poster
@@ -169,6 +174,18 @@
             construct.url("random")
         }).go();
     }
+
+    // parse number to amount, comma seperated
+    var parseAmount = function(amount) {
+        amount = amount.toFixed(0).replace(/./g, function(c, i, a) {
+                return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+            });
+
+        amount = "$ " + amount;
+
+        return amount;
+    }
+
     // get random number between to values
     var randomNum = function(min, max) {
         return Math.floor(Math.random() * ((max - min) + 1) + min);
