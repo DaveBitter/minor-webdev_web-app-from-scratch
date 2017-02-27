@@ -34,7 +34,10 @@
                     handleRoute("detail", id);
                 }
             });
-        }
+        },
+        handle: function(type, id) {
+            handleRoute(type, id);
+        },
     }
 
     var gesture = {
@@ -60,9 +63,6 @@
         });
     }
     var construct = {
-        url: function(type, id) {
-            handleRoute(type, id);
-        },
         posterPath: function(path) {
             buildPosterPath(path);
         },
@@ -215,7 +215,7 @@
         var url = app.config.BASEURL + app.config.QUERY.ALL + app.config.APIKEY;
         aja().url(url).on('success', function(data) {
             app.config.totalSpan = data.total_results;
-            construct.url("random")
+            router.handle("random")
         }).go();
     }
     // parse number to amount, comma seperated
@@ -274,7 +274,7 @@
         // check if more items should be loaded
         if (topLoadmore.top - topDoc < 1200 && window.location.hash === '' && canLoad === true) {
             app.cache.position = (window.pageYOffset);
-            construct.url("random")
+            router.handle("random")
         }
     });
     app.init();
