@@ -30,6 +30,7 @@
     </head>
     <body>
         <header>
+        	<a>
             <h1>
                 <i aria-hidden="true" class="fa fa-ticket">
                 </i>
@@ -62,6 +63,8 @@
         <main>
             <section id="movies">
             </section>
+             <section id="favorites">
+            </section>
             <div id="loader" class="hide"></div>
             <section id="movie">
             </section>
@@ -85,8 +88,7 @@
         <script id="template" type="text/x-handlebars-template">
             <article>
 		<a href="#movie/{{id}}"}>
-		            {{#if title}}
-
+		      {{#if title}}
 				<h1>{{title}}</h1>
 			{{/if}}
 			{{#if tagline}}
@@ -109,6 +111,13 @@
         </script>
         <script id="detailtemplate" type="text/x-handlebars-template">
             <article>
+            	{{#if favorite}}
+				<i id="favorite" class="fa fa-heart" aria-hidden="true"></i>
+			{{else}}
+				<a href="#movie/{{id}}/favorite">
+					<i id="favorite" class="fa fa-heart-o" aria-hidden="true"></i>
+				</a>
+			{{/if}}
 	            <header>
 		            {{#if title}}
 

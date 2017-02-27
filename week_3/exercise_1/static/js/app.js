@@ -12,7 +12,8 @@
         },
         cache: {
             position: 0,
-            results: []
+            results: [],
+            favorites: []
         },
         init: function() {
             router.init();
@@ -90,6 +91,9 @@
         all: function(data) {
             renderAll(data);
         },
+        favorites: function(data) {
+            renderFavorites(data);
+        },
         detail: function(data) {
             renderDetail(data);
         }
@@ -103,6 +107,16 @@
             html = ''
         html = compile(data);
         movies.innerHTML += html;
+    }
+    // render favorites
+    var renderFavorites = function(data) {
+        var favorites = document.querySelector('#favorites'),
+            template = document.querySelector('#template'),
+            source = template.innerHTML,
+            compile = Handlebars.compile(source),
+            html = ''
+        html = compile(data);
+        favorites.innerHTML += html;
     }
     //  render detailpage
     var renderDetail = function(data) {
@@ -168,6 +182,7 @@
                 // build the url for the query for the overviewpage
                 document.querySelector('#movies').classList.remove('hide')
                 document.querySelector('#movie').classList.add('hide')
+                document.querySelector('#favorites').classList.add('hide')
                 document.querySelector('#back').classList.add('hide')
                 window.scrollTo(0, app.cache.position);
                 // add X amount of movies to the overviewpage
@@ -185,6 +200,7 @@
                 // get all the data from the required movie out of the app.cached movies
                 document.querySelector('#movies').classList.add('hide')
                 document.querySelector('#movie').classList.remove('hide')
+                document.querySelector('#favorites').classList.add('hide')
                 document.querySelector('#back').classList.remove('hide')
                 document.querySelector('#movie').innerHTML = ''
                 // find the required movie
@@ -197,16 +213,25 @@
                var movieData = app.cache.results.find(function(result) {
                     return result.id == id
                 });
-               localStorage.setItem(movieData);
+               document.querySelector('#favorite').classList.remove('fa-heart-o')
+               document.querySelector('#favorite').classList.add('fa-heart')
+
+               movieData.favorite = true;
+               app.cache.favorites.push(movieData)
+               localStorage.setItem('data', JSON.stringify(app.cache.favorites));
                 break;
              case "favorites":
                 // build the url for the query for the overviewpage
-                document.querySelector('#movies').classList.remove('hide')
+                document.querySelector('#movies').classList.add('hide')
                 document.querySelector('#movie').classList.add('hide')
                 document.querySelector('#back').classList.remove('hide')
+                document.querySelector('#favorites').classList.remove('hide')
+                document.querySelector('#favorites').innerHTML = ''
                 // add X amount of movies to the overviewpage
-               console.log("favoritasasas")
-                console.log(localStorage)
+                var favorites = JSON.parse(localStorage.data);
+                favorites.forEach(function(result) {
+                    render.favorites(result)
+                });
                 break;
         }
     }
