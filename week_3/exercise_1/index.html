@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>
+                Exercise 1 | Ajax API call
+            </title>
+        </meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+            <link href="static/css/main.css" rel="stylesheet" type="text/css">
+            </link>
+        </link>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <header>
+            <h1>
+            	<i class="fa fa-ticket" aria-hidden="true"></i>
+                What Movie To Watch?
+            </h1>
+            <p>A true random movie finder</p>
+            <a href="#">
+	            <button id="back" class="hide"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+            </a>
+         </header>
+        <main>
+            <section id="movies">
+            </section>
+            <section id="movie">
+            </section>
+            <div id="loadmore">
+            </div>
+        </main>
+        <script src="static/js/aja.js" type="text/javascript">
+        </script>
+        <script src="static/js/routie.js" type="text/javascript">
+        </script>
+        <!-- Handlebars script template -->
+        <script src="static/js/handlebars.js" type="text/javascript">
+        </script>
+        <script src="static/js/app.js" type="text/javascript">
+        </script>
+        <script id="template" type="text/x-handlebars-template">
+            <article>
+		<a href="#movie/{{id}}"}>
+		            {{#if title}}
+
+				<h1>{{title}}</h1>
+			{{/if}}
+			{{#if tagline}}
+				<sup>{{tagline}}</sup>
+			{{/if}}
+			{{#if poster_path}}
+				<img src={{poster_path}}>
+			{{/if}}
+			{{#if stars}}
+				<div class="rating">
+					{{#each stars}}
+						<i class="fa fa-star" aria-hidden="true"></i>
+					{{/each}}
+					 ({{vote_count}} votes)
+				</div>
+			{{/if}}
+		</a>
+        </article>
+        </script>
+        <script id="detailtemplate" type="text/x-handlebars-template">
+            <article>
+	            <header>
+		            {{#if title}}
+
+				<h1>{{title}}</h1>
+			{{/if}}
+			{{#if tagline}}
+				<sup>{{tagline}}</sup>
+			{{/if}}
+
+	            </header>
+	            <hr />
+	            <div class="content">
+			{{#if poster_path}}
+				<img src={{poster_path}}>
+			{{/if}}
+		            <div class="info">
+				{{#if overview}}
+					<h3>Summary</h3>
+					<p>{{overview}}</p>
+				{{/if}}
+
+				<ul>
+					{{#if budget}}
+						<li>
+							<h4><i class="fa fa-money" aria-hidden="true"></i>
+Budget (USD)</h4>
+							<p>{{budget}}</p></li>
+					{{/if}}
+
+
+					{{#if revenue}}
+						<li>
+							<h4><i class="fa fa-credit-card" aria-hidden="true"></i>
+Revenue (USD)</h4>
+							<p>{{revenue}}</p></li>
+					{{/if}}
+
+					{{#if release_date}}
+						<li>
+							<h4><i class="fa fa-calendar" aria-hidden="true"></i>
+Release date</h4>
+							<p>{{release_date}}</p></li>
+					{{/if}}
+					{{#if runtime}}
+						<li>
+							<h4><i class="fa fa-clock-o" aria-hidden="true"></i>
+Runtime</h4>
+							<p>{{runtime}} minutes</p></li>
+					{{/if}}
+					{{#if imdb_link}}
+						<li>
+							<h4><i class="fa fa-imdb" aria-hidden="true"></i> Check on IMDB</h4>
+							<a href={{imdb_link}} target="_blank">{{imdb_link}}</a>
+						</li>
+					{{/if}}
+				</ul>
+
+	            </div>
+	            </div>
+
+
+
+
+	        </article>
+        </script>
+    </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+			<title>
+				Exercise 1 | Ajax API call
+			</title>
+		</meta>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+			<link href="static/css/main.css" rel="stylesheet" type="text/css">
+			</link>
+		</link>
+	</head>
+	<body>
+		<main>
+			<h1>
+				Star Wars
+			</h1>
+			<table>
+			<tbody>
+			<thead>
+			<th>name</th>
+			<th>birth year</th>
+			<th>gender</th>
+			<th><a href="#sort/desc">height</a></th>
+			<th>mass</th>
+			<th>skin color</th>
+			<th>Movies</th>
+
+			</thead>
+
+			</tbody>
+
+			</table>
+
+			<section id="detail">
+
+			</section>
+			<!-- HTML will be injected here -->
+		</main>
+		<script src="static/js/aja.js" type="text/javascript">
+		</script>
+		<script src="static/js/routie.js" type="text/javascript">
+		</script>
+		<!-- Handlebars script template -->
+		<script src="static/js/handlebars.js" type="text/javascript">
+		</script>
+		<script id="template" type="text/x-handlebars-template">
+		<tr>
+			{{#if name}}
+			<td>{{name}}</td>
+			{{/if}}
+
+			{{#if birth_year}}
+			<td>{{birth_year}}</td>
+			{{/if}}
+
+			{{#if gender}}
+			<td>{{gender}}</td>
+			{{/if}}
+
+			{{#if height}}
+			<td>{{height}}</td>
+			{{/if}}
+
+			{{#if mass}}
+			<td>{{mass}}</td>
+			{{/if}}
+
+			{{#if skin_color}}
+			<td>{{skin_color}}</td>
+			{{/if}}
+
+			<td>
+			<a href="#people/{{id}}">Movies</a>
+			</td>
+		</tr>
+
+
+		</script>
+		<script id="detailtemplate" type="text/x-handlebars-template">
+		{{#if title}}
+			<h1>{{title}}</h1>
+			{{/if}}
+
+
+		</script>
+		<script src="static/js/app.js" type="text/javascript">
+		</script>
+	</body>
+</html>
