@@ -31,7 +31,7 @@ main {
 }
 
 body>header+* {
-    margin-top: 6rem;
+    margin-top: 8rem;
 }
 
 body>header {
@@ -47,6 +47,20 @@ body>header {
     margin-bottom: 1rem;
     box-sizing: border-box;
     height: 4rem;
+}
+
+#filter-bar {
+    background-color: #333;
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    padding: .5rem 1rem;
+    margin: 0;
+}
+
+label > p {
+    float: left;
+    padding-top: .3rem;
 }
 
 body>header button {
@@ -282,7 +296,7 @@ article {
     cursor: progress;
     height: 4rem;
     width: 4rem;
-    border: 2px solid #DE1B1B;
+    border: 2px solid #ea4a48;
     border-radius: 100%;
     border-top-color: transparent;
     animation-name: spinner;
@@ -290,6 +304,70 @@ article {
     animation-iteration-count: infinite;
     animation-fill-mode: both;
     box-sizing: border-box;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+  margin-left: 1rem;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #ea4a48;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #ea4a48;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(1.5rem);
+  -ms-transform: translateX(1.5rem);
+  transform: translateX(1.5rem);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 3rem;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.pull-right {
+    float: right;
+    margin-right: 5rem;
 }
 
 @keyframes spinner {
