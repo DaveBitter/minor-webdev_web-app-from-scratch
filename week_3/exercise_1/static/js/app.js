@@ -17,6 +17,7 @@
         init: function() {
             router.init();
             getFilterConfig();
+            gesture.init()
         }
     }
     var router = {
@@ -36,17 +37,27 @@
         }
     }
 
+    var gesture = {
+        init: function() {
+            swipe()
+        }
+    }
     var filter = {
         adult: false,
         config: function() {
             getFilterConfig();
         }
-
     }
     var data = {
         get: function(url, time) {
             getData(url, time)
         }
+    }
+    var swipe = function() {
+        var bodySwipe = new Hammer(document.querySelector('body'));
+        bodySwipe.on('swiperight', function(ev) {
+            buildUrl('random')
+        });
     }
     var construct = {
         url: function(type, id) {
@@ -89,7 +100,6 @@
     //  render detailpage
     var renderDetail = function(data) {
         var template = document.querySelector('#detailtemplate')
-        console.log(template.innerHTML)
         // redirect to home if no data is found
         if (typeof template === 'undefined' || template === null) {
             window.location.href = ('#')
@@ -120,11 +130,9 @@
             data.stars = construct.stars(data.vote_average, 10)
             data.imdb_link = buildImdbLink(data.imdb_id)
             // storing data in cache in order to use it later on
-            if(toBeFiltered(data) === true) {
-                console.log("Kicked")
+            if (toBeFiltered(data) === true) {
                 return;
             }
-            console.log(data)
             app.cache.results.push(data)
             // reducing of the properties of data to the minumum required by the front-end
             data = ['title', 'poster_path', 'stars', 'vote_count', 'imdb_link', 'id'].reduce(function(o, k) {
@@ -180,22 +188,18 @@
                 break;
         }
     }
-
     var getFilterConfig = function() {
         document.getElementById("filter-adult").addEventListener('click', function() {
             filter.adult = !filter.adult;
-            console.log(filter.adult)
         })
     }
-
     var toBeFiltered = function(movie) {
-        if(movie.adult === true && filter.adult === true) {
+        if (movie.adult === true && filter.adult === true) {
             return true
         } else {
             return false
         }
     }
-
     // build the full path for the poster
     var buildPosterPath = function(poster_path) {
         // create fallback for when no poster is available, otherwise build the file url
