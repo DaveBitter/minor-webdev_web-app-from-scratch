@@ -25,13 +25,13 @@
             routie({
                 // handle routing
                 'all': function() {
-                    buildUrl("all");
+                    handleRoute("all");
                 },
                 '': function() {
                     getTotalSpan("random");
                 },
                 'movie/:id': function(id) {
-                    buildUrl("detail", id);
+                    handleRoute("detail", id);
                 }
             });
         }
@@ -56,12 +56,12 @@
     var swipe = function() {
         var bodySwipe = new Hammer(document.querySelector('body'));
         bodySwipe.on('swiperight', function(ev) {
-            buildUrl('random')
+            handleRoute('random')
         });
     }
     var construct = {
         url: function(type, id) {
-            buildUrl(type, id);
+            handleRoute(type, id);
         },
         posterPath: function(path) {
             buildPosterPath(path);
@@ -147,7 +147,7 @@
         }).go();
     }
     // build url for data request to API
-    var buildUrl = function(type, id) {
+    var handleRoute = function(type, id) {
         var queryUrl = "";
         // build the url for the query to get the amount of movies available
         switch (type) {
