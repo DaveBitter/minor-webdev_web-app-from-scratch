@@ -120,10 +120,11 @@
             data.stars = construct.stars(data.vote_average, 10)
             data.imdb_link = buildImdbLink(data.imdb_id)
             // storing data in cache in order to use it later on
-            if(kickMovie(data) === true) {
+            if(toBeFiltered(data) === true) {
                 console.log("Kicked")
                 return;
             }
+            console.log(data)
             app.cache.results.push(data)
             // reducing of the properties of data to the minumum required by the front-end
             data = ['title', 'poster_path', 'stars', 'vote_count', 'imdb_link', 'id'].reduce(function(o, k) {
@@ -187,7 +188,7 @@
         })
     }
 
-    var kickMovie = function(movie) {
+    var toBeFiltered = function(movie) {
         if(movie.adult === true && filter.adult === true) {
             return true
         } else {
