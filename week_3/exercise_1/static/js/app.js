@@ -73,6 +73,7 @@
 
     // render overviewpage
     var renderAll = function(data) {
+        toggleLoader();
         var movies = document.querySelector('#movies'),
             template = document.querySelector('#template'),
             source = template.innerHTML,
@@ -94,6 +95,11 @@
             html = ''
         html = compile(data);
         movies.innerHTML += html;
+    }
+     //  toggle loader
+    var toggleLoader= function() {
+        var loader = document.getElementById("loader");
+        loader.classList.toggle("hide");
     }
     // get data from API
     var getData = function(url) {
@@ -135,6 +141,7 @@
                 document.querySelector('#back').classList.add('hide')
                 window.scrollTo(0, app.cache.position);
                 // add X amount of movies to the overviewpage
+                toggleLoader();
                 for (i = 0; i < 30; i++) {
                     var randomMovieId = construct.randomNum(0, app.config.totalSpan);
                     queryUrl = app.config.QUERY.RANDOM;
@@ -234,8 +241,8 @@
     });
     app.init();
 })();
+
 // MicroLibs used:
 // Handlebars (http://handlebarsjs.com/)
 // Aja (http://krampstudio.com/aja.js/)
 // Routie (https://github.com/jgallen23/routie)
-// Accounting (http://openexchangerates.github.io/accounting.js/)
