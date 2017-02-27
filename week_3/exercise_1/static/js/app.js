@@ -17,7 +17,7 @@
         init: function() {
             router.init();
             getFilterConfig();
-            gesture.init()
+            event.init();
         }
     }
     var router = {
@@ -32,17 +32,24 @@
                 },
                 'movie/:id': function(id) {
                     handleRoute("detail", id);
-                }
+                },
+                'movie/:id/favorite': function(id) {
+                    handleRoute("favorite", id);
+                },
+                 'favorites': function() {
+                    handleRoute("favorites");
+                },
             });
         },
         handle: function(type, id) {
             handleRoute(type, id);
         },
     }
-
-    var gesture = {
+    var event = {
         init: function() {
-            swipe()
+            swipe();
+            scroll();
+            // favorite();
         }
     }
     var filter = {
@@ -186,6 +193,21 @@
                 });
                 render.detail(detailData);
                 break;
+            case "favorite":
+               var movieData = app.cache.results.find(function(result) {
+                    return result.id == id
+                });
+               localStorage.setItem(movieData);
+                break;
+             case "favorites":
+                // build the url for the query for the overviewpage
+                document.querySelector('#movies').classList.remove('hide')
+                document.querySelector('#movie').classList.add('hide')
+                document.querySelector('#back').classList.remove('hide')
+                // add X amount of movies to the overviewpage
+               console.log("favoritasasas")
+                console.log(localStorage)
+                break;
         }
     }
     var getFilterConfig = function() {
@@ -242,41 +264,43 @@
     var buildImdbLink = function(imdb_id) {
         return ('http://imdb.com/title/' + imdb_id)
     }
-    // get position of the 'refresh element'
-    var cumulativeOffset = function(element) {
-        var top = 0,
-            left = 0;
-        do {
-            top += element.offsetTop || 0;
-            left += element.offsetLeft || 0;
-            element = element.offsetParent;
-        } while (element);
-        return {
-            top: top,
-            left: left
+    var scroll = function() {
+        // get position of the 'refresh element'
+        var cumulativeOffset = function(element) {
+            var top = 0,
+                left = 0;
+            do {
+                top += element.offsetTop || 0;
+                left += element.offsetLeft || 0;
+                element = element.offsetParent;
+            } while (element);
+            return {
+                top: top,
+                left: left
+            };
         };
-    };
-    var limit = function() {
-        setTimeout(function() {
-            canLoad = true
-        }, 000);
+        var limit = function() {
+            setTimeout(function() {
+                canLoad = true
+            }, 000);
+        }
+        var canLoad = true;
+        // check if the user scrolled to the bottom of the page (then add new items)
+        window.addEventListener('scroll', function(e) {
+            // get the top of the viewport (window) and the top of the load more element at the bottom of the page
+            var topDoc = (window.pageYOffset);
+            var topLoadmore = cumulativeOffset(loadmore);
+            if (window.location.hash === '') {
+                // app.cache the current position on the page for when you return from the detailpage
+                app.cache.position = (window.pageYOffset);
+            }
+            // check if more items should be loaded
+            if (topLoadmore.top - topDoc < 1200 && window.location.hash === '' && canLoad === true) {
+                app.cache.position = (window.pageYOffset);
+                router.handle("random")
+            }
+        });
     }
-    var canLoad = true;
-    // check if the user scrolled to the bottom of the page (then add new items)
-    window.addEventListener('scroll', function(e) {
-        // get the top of the viewport (window) and the top of the load more element at the bottom of the page
-        var topDoc = (window.pageYOffset);
-        var topLoadmore = cumulativeOffset(loadmore);
-        if (window.location.hash === '') {
-            // app.cache the current position on the page for when you return from the detailpage
-            app.cache.position = (window.pageYOffset);
-        }
-        // check if more items should be loaded
-        if (topLoadmore.top - topDoc < 1200 && window.location.hash === '' && canLoad === true) {
-            app.cache.position = (window.pageYOffset);
-            router.handle("random")
-        }
-    });
     app.init();
 })();
 // MicroLibs used:
