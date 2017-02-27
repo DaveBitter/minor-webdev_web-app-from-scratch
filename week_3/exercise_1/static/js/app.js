@@ -80,6 +80,7 @@
     //  render detailpage
     var renderDetail = function(data) {
         var template = document.querySelector('#detailtemplate')
+        console.log(template.innerHTML)
         // redirect to home if no data is found
         if (typeof template === 'undefined' || template === null) {
             window.location.href = ('#')
@@ -224,7 +225,7 @@
     var limit = function() {
         setTimeout(function() {
             canLoad = true
-        }, 5000);
+        }, 000);
     }
     var canLoad = true;
     // check if the user scrolled to the bottom of the page (then add new items)
