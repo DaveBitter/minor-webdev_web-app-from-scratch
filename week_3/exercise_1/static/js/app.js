@@ -34,46 +34,41 @@
             });
         }
     }
-
     var data = {
-        get: function (url) {
-            getData(url)
+        get: function(url, time) {
+            getData(url, time)
         }
     }
-
     var construct = {
-        url: function (type, id) {
-            buildUrl (type, id);
+        url: function(type, id) {
+            buildUrl(type, id);
         },
-        posterPath: function (path) {
-            buildPosterPath (path);
+        posterPath: function(path) {
+            buildPosterPath(path);
         },
-        amount: function (amount) {
+        amount: function(amount) {
             return parseAmount(amount);
         },
-        randomNum: function (min, max) {
+        randomNum: function(min, max) {
             return randomNum(min, max);
         },
-        stars: function (amount) {
+        stars: function(amount) {
             return getStars(amount);
         },
-        imdbLink: function (id) {
+        imdbLink: function(id) {
             return buildImdbLink(id);
         }
     }
-
     var render = {
-        all: function (data) {
+        all: function(data) {
             renderAll(data);
         },
-        detail: function (data) {
+        detail: function(data) {
             renderDetail(data);
         }
     }
-
     // render overviewpage
     var renderAll = function(data) {
-        toggleLoader();
         var movies = document.querySelector('#movies'),
             template = document.querySelector('#template'),
             source = template.innerHTML,
@@ -96,15 +91,17 @@
         html = compile(data);
         movies.innerHTML += html;
     }
-     //  toggle loader
-    var toggleLoader= function() {
+    //  toggle loader
+    var toggleLoader = function() {
         var loader = document.getElementById("loader");
         loader.classList.toggle("hide");
     }
     // get data from API
-    var getData = function(url) {
-        aja().url(url).on('error', function() {
-            return
+    var getData = function(url, time) {
+        aja().url(url).on('4xx', function() {
+            if (time === 29) {
+                toggleLoader();
+            }
         }).on('success', function(data) {
             //  manuipulating data to use in the front-end
             data.budget = construct.amount(data.budget);
@@ -120,6 +117,9 @@
                 return o;
             }, {});
             // render the overview page
+            if (time === 29) {
+                toggleLoader();
+            }
             render.all(data);
         }).go();
     }
@@ -127,7 +127,7 @@
     var buildUrl = function(type, id) {
         var queryUrl = "";
         // build the url for the query to get the amount of movies available
-        switch(type) {
+        switch (type) {
             case "all":
                 if (type === "all") {
                     queryUrl = app.config.QUERY.ALL;
@@ -146,8 +146,10 @@
                     var randomMovieId = construct.randomNum(0, app.config.totalSpan);
                     queryUrl = app.config.QUERY.RANDOM;
                     queryUrl = app.config.QUERY.RANDOM = 'movie/' + randomMovieId
-                    data.get(app.config.BASEURL + queryUrl + app.config.APIKEY)
+                    data.get(app.config.BASEURL + queryUrl + app.config.APIKEY, i)
                 }
+                canLoad = false
+                limit()
                 break;
             case "detail":
                 // get all the data from the required movie out of the app.cached movies
@@ -181,18 +183,14 @@
             construct.url("random")
         }).go();
     }
-
     // parse number to amount, comma seperated
     var parseAmount = function(amount) {
         amount = amount.toFixed(0).replace(/./g, function(c, i, a) {
-                return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-            });
-
+            return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+        });
         amount = "$ " + amount;
-
         return amount;
     }
-
     // get random number between to values
     var randomNum = function(min, max) {
         return Math.floor(Math.random() * ((max - min) + 1) + min);
@@ -223,7 +221,12 @@
             left: left
         };
     };
-
+    var limit = function() {
+        setTimeout(function() {
+            canLoad = true
+        }, 5000);
+    }
+    var canLoad = true;
     // check if the user scrolled to the bottom of the page (then add new items)
     window.addEventListener('scroll', function(e) {
         // get the top of the viewport (window) and the top of the load more element at the bottom of the page
@@ -234,14 +237,13 @@
             app.cache.position = (window.pageYOffset);
         }
         // check if more items should be loaded
-        if (topLoadmore.top - topDoc < 1200 && window.location.hash === '') {
+        if (topLoadmore.top - topDoc < 1200 && window.location.hash === '' && canLoad === true) {
             app.cache.position = (window.pageYOffset);
             construct.url("random")
         }
     });
     app.init();
 })();
-
 // MicroLibs used:
 // Handlebars (http://handlebarsjs.com/)
 // Aja (http://krampstudio.com/aja.js/)
