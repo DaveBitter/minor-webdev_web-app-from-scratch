@@ -3,56 +3,152 @@
     <head>
         <meta charset="utf-8">
             <title>
-                Exercise 1 | Ajax API call
+                WMTW | What Movie To Watch?
             </title>
         </meta>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-            <link href="static/css/main.css" rel="stylesheet" type="text/css">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+            <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+                <link href="static/css/main.css" rel="stylesheet" type="text/css">
+                </link>
             </link>
-        </link>
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+            </link>
+            <link href="favicon/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57">
+                <link href="favicon/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60">
+                    <link href="favicon/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+                        <link href="favicon/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76">
+                            <link href="favicon/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+                                <link href="favicon/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120">
+                                    <link href="favicon/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
+                                        <link href="favicon/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152">
+                                            <link href="favicon/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180">
+                                                <link href="favicon/manifest.json" rel="manifest">
+                                                    <meta content="#ffffff" name="msapplication-TileColor">
+                                                        <meta content="favicon/ms-icon-144x144.png" name="msapplication-TileImage">
+                                                            <meta content="#ffffff" name="theme-color">
+                                                            </meta>
+                                                        </meta>
+                                                    </meta>
+                                                </link>
+                                            </link>
+                                        </link>
+                                    </link>
+                                </link>
+                            </link>
+                        </link>
+                    </link>
+                </link>
+            </link>
+        </meta>
     </head>
     <body>
         <header>
-            <h1>
-            	<i class="fa fa-ticket" aria-hidden="true"></i>
-                What Movie To Watch?
-            </h1>
-            <p>A true random movie finder</p>
             <a href="#">
-	            <button id="back" class="hide"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
+                <h1>
+                    <i aria-hidden="true" class="fa fa-ticket">
+                    </i>
+                    What Movie To Watch?
+                </h1>
+                <p>
+                    A true random movie finder
+                </p>
+                <nav>
+                    <a href="#favorites">
+                        <i class="fa fa-heart">
+                        </i>
+                    </a>
+                </nav>
+                <a href="#">
+                    <button class="hide" id="back">
+                        <i aria-hidden="true" class="fa fa-arrow-circle-left">
+                        </i>
+                    </button>
+                </a>
+                <div id="filterbar">
+                    <label class="pull-right">
+                        <p>
+                            adult
+                        </p>
+                        <div class="switch">
+                            <input checked="" id="filter-adult" type="checkbox">
+                                <div class="slider round">
+                                </div>
+                            </input>
+                        </div>
+                    </label>
+                    <label class="pull-right">
+                        <p>
+                            filter:
+                        </p>
+                    </label>
+                </div>
+                <div id="sortbar">
+                    <label class="pull-right">
+                        <p>
+                            duration
+                        </p>
+                        <div class="switch">
+                            <input id="sort-runtime" type="checkbox">
+                                <div class="slider round">
+                                </div>
+                            </input>
+                        </div>
+                    </label>
+                    <label class="pull-right">
+                        <p>
+                            popularity
+                        </p>
+                        <div class="switch">
+                            <input checked="" id="sort-popularity" type="checkbox">
+                                <div class="slider round">
+                                </div>
+                            </input>
+                        </div>
+                    </label>
+                    <label class="pull-right">
+                        <p>
+                            sort:
+                        </p>
+                    </label>
+                </div>
             </a>
-         </header>
+        </header>
         <main>
             <section id="movies">
             </section>
+            <section id="favorites">
+            </section>
+            <div class="hide" id="loader">
+            </div>
             <section id="movie">
             </section>
             <div id="loadmore">
             </div>
         </main>
-        <script src="static/js/aja.js" type="text/javascript">
+        <script src="static/js/libs/aja.js" type="text/javascript">
         </script>
-        <script src="static/js/routie.js" type="text/javascript">
+        <script src="static/js/libs/routie.js" type="text/javascript">
         </script>
         <!-- Handlebars script template -->
-        <script src="static/js/handlebars.js" type="text/javascript">
+        <script src="static/js/libs/handlebars.js" type="text/javascript">
+        </script>
+        <script src="static/js/libs/hammer.min.js" type="text/javascript">
+        </script>
+        <script src="static/js/libs/hammer-time.min.js" type="text/javascript">
         </script>
         <script src="static/js/app.js" type="text/javascript">
         </script>
         <script id="template" type="text/x-handlebars-template">
             <article>
 		<a href="#movie/{{id}}"}>
-		            {{#if title}}
-
+		      {{#if title}}
 				<h1>{{title}}</h1>
 			{{/if}}
 			{{#if tagline}}
 				<sup>{{tagline}}</sup>
 			{{/if}}
 			{{#if poster_path}}
+				<i class="fa fa-spinner" aria-hidden="true"></i>
 				<img src={{poster_path}}>
 			{{/if}}
 			{{#if stars}}
@@ -68,6 +164,13 @@
         </script>
         <script id="detailtemplate" type="text/x-handlebars-template">
             <article>
+            	{{#if favorite}}
+				<i id="favorite" class="fa fa-heart" aria-hidden="true"></i>
+			{{else}}
+				<a href="#movie/{{id}}/favorite">
+					<i id="favorite" class="fa fa-heart-o" aria-hidden="true"></i>
+				</a>
+			{{/if}}
 	            <header>
 		            {{#if title}}
 
