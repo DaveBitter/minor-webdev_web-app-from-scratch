@@ -78,18 +78,16 @@
         byPopularity: function(order) {
             var favorites = JSON.parse(localStorage.data)
             document.querySelector('#favorites').innerHTML = ''
-
             if (order === "desc") {
                 sort.initialOrder.byPopularity = "asc"
 
                 function sortNumber(a, b) {
-                    return  b.popularity - a.popularity;
+                    return b.popularity - a.popularity;
                 }
                 favorites.sort(sortNumber);
                 favorites.forEach(function(favorite) {
                     renderFavorites(favorite)
                 });
-
             } else {
                 sort.initialOrder.byPopularity = "desc"
 
@@ -102,21 +100,19 @@
                 });
             }
         },
-         byRuntime: function(order) {
+        byRuntime: function(order) {
             var favorites = JSON.parse(localStorage.data)
             document.querySelector('#favorites').innerHTML = ''
-
             if (order === "desc") {
                 sort.initialOrder.byRuntime = "asc"
 
                 function sortNumber(a, b) {
-                    return  b.runtime - a.runtime;
+                    return b.runtime - a.runtime;
                 }
                 favorites.sort(sortNumber);
                 favorites.forEach(function(favorite) {
                     renderFavorites(favorite)
                 });
-
             } else {
                 sort.initialOrder.byRuntime = "desc"
 
@@ -277,6 +273,14 @@
                 var detailData = app.cache.results.find(function(result) {
                     return result.id == id
                 });
+                console.log(detailData)
+                if (typeof detailData === 'undefined' || detailData === null) {
+                    console.log("Undefined yoo")
+                    detailData = JSON.parse(localStorage.data).find(function(result) {
+                        return result.id == id
+                    });
+                    console.log(detailData)
+                }
                 render.detail(detailData);
                 break;
             case "favorite":
