@@ -28,3 +28,7 @@ I highly encourage adding issues to this repo in the case of finding one. I'm al
 #### Exercise 1
 [Exercise 1](week_2/exercise_1/)
 
+### Week 3
+#### Exercise 1
+[Exercise 1](week_3/exercise_1/)
+
