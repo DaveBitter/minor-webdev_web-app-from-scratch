@@ -13,78 +13,115 @@
             </link>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
             </link>
-            <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
-		<link rel="manifest" href="favicon/manifest.json">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
-		<meta name="theme-color" content="#ffffff">
+            <link href="favicon/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57">
+                <link href="favicon/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60">
+                    <link href="favicon/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+                        <link href="favicon/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76">
+                            <link href="favicon/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+                                <link href="favicon/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120">
+                                    <link href="favicon/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
+                                        <link href="favicon/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152">
+                                            <link href="favicon/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180">
+                                                <link href="favicon/manifest.json" rel="manifest">
+                                                    <meta content="#ffffff" name="msapplication-TileColor">
+                                                        <meta content="favicon/ms-icon-144x144.png" name="msapplication-TileImage">
+                                                            <meta content="#ffffff" name="theme-color">
+                                                            </meta>
+                                                        </meta>
+                                                    </meta>
+                                                </link>
+                                            </link>
+                                        </link>
+                                    </link>
+                                </link>
+                            </link>
+                        </link>
+                    </link>
+                </link>
+            </link>
         </meta>
     </head>
     <body>
         <header>
-        	<a>
-            <h1>
-                <i aria-hidden="true" class="fa fa-ticket">
-                </i>
-                What Movie To Watch?
-            </h1>
-            <p>
-                A true random movie finder
-            </p>
-            <nav>
-	            <a href="#favorites">Favorites</a>
-
-            </nav>
-
             <a href="#">
-                <button class="hide" id="back">
-                    <i aria-hidden="true" class="fa fa-arrow-circle-left">
+                <h1>
+                    <i aria-hidden="true" class="fa fa-ticket">
                     </i>
-                </button>
+                    What Movie To Watch?
+                </h1>
+                <p>
+                    A true random movie finder
+                </p>
+                <nav>
+                    <a href="#favorites">
+                        <i class="fa fa-heart">
+                        </i>
+                    </a>
+                </nav>
+                <a href="#">
+                    <button class="hide" id="back">
+                        <i aria-hidden="true" class="fa fa-arrow-circle-left">
+                        </i>
+                    </button>
+                </a>
+                <div id="filterbar">
+                    <label class="pull-right">
+                        <p>
+                            adult
+                        </p>
+                        <div class="switch">
+                            <input checked="" id="filter-adult" type="checkbox">
+                                <div class="slider round">
+                                </div>
+                            </input>
+                        </div>
+                    </label>
+                    <label class="pull-right">
+                        <p>
+                            filter:
+                        </p>
+                    </label>
+                </div>
+                <div id="sortbar">
+                    <label class="pull-right">
+                        <p>
+                            duration
+                        </p>
+                        <div class="switch">
+                            <input id="sort-runtime" type="checkbox">
+                                <div class="slider round">
+                                </div>
+                            </input>
+                        </div>
+                    </label>
+                    <label class="pull-right">
+                        <p>
+                            popularity
+                        </p>
+                        <div class="switch">
+                            <input checked="" id="sort-popularity" type="checkbox">
+                                <div class="slider round">
+                                </div>
+                            </input>
+                        </div>
+                    </label>
+                    <label class="pull-right">
+                        <p>
+                            sort:
+                        </p>
+                    </label>
+                </div>
             </a>
-		<div id="filter-bar">
-			<label class="pull-right">
-				<p>adult</p>
-				<div class="switch">
-					<input type="checkbox" id="filter-adult" checked>
-					<div class="slider round"></div>
-				</div>
-			</label>
-		</div>
         </header>
         <main>
             <section id="movies">
             </section>
-            <section id="sort-options">
-            	<label>
-				<p>popularity</p>
-				<div class="switch">
-					<input type="checkbox" id="sort-popularity">
-					<div class="slider round"></div>
-				</div>
-			</label>
-			<label>
-				<p>duration</p>
-				<div class="switch">
-					<input type="checkbox" id="sort-runtime">
-					<div class="slider round"></div>
-				</div>
-			</label>
+            <section id="favorites">
             </section>
-             <section id="favorites">
-            </section>
-            <div id="loader" class="hide"></div>
+            <div class="hide" id="loader">
+            </div>
             <section id="movie">
             </section>
-
             <div id="loadmore">
             </div>
         </main>

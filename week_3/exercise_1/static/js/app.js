@@ -19,7 +19,9 @@
             movies: document.querySelector('#movies'),
             movie: document.querySelector('#movie'),
             favorites: document.querySelector('#favorites'),
-            back: document.querySelector('#back')
+            back: document.querySelector('#back'),
+            filterbar: document.querySelector('#filterbar'),
+            sortbar: document.querySelector('#sortbar')
         },
         init: function() {
             router.init();
@@ -112,7 +114,7 @@
             });
         }
     }
-    var construct = {
+    var generate = {
         posterPath: function(path) {
             buildPosterPath(path);
         },
@@ -187,10 +189,10 @@
             }
         }).on('success', function(data) {
             //  manuipulating data to use in the front-end
-            data.budget = construct.amount(data.budget);
-            data.revenue = construct.amount(data.revenue);
+            data.budget = generate.amount(data.budget);
+            data.revenue = generate.amount(data.revenue);
             data.poster_path = buildPosterPath(data.poster_path);
-            data.stars = construct.stars(data.vote_average, 10)
+            data.stars = generate.stars(data.vote_average, 10)
             data.imdb_link = buildImdbLink(data.imdb_id)
             // storing data in cache in order to use it later on
             if (toBeFiltered(data) === true) {
@@ -226,11 +228,13 @@
                 app.sections.movie.classList.add('hide')
                 app.sections.favorites.classList.add('hide')
                 app.sections.back.classList.add('hide')
+                app.sections.filterbar.classList.remove('hide')
+                app.sections.sortbar.classList.add('hide')
                 window.scrollTo(0, app.cache.position);
                 // add X amount of movies to the overviewpage
                 toggleLoader();
                 for (i = 0; i < 30; i++) {
-                    var randomMovieId = construct.randomNum(0, app.config.totalSpan);
+                    var randomMovieId = generate.randomNum(0, app.config.totalSpan);
                     queryUrl = app.config.QUERY.RANDOM;
                     queryUrl = app.config.QUERY.RANDOM = 'movie/' + randomMovieId
                     data.get(app.config.BASEURL + queryUrl + app.config.APIKEY, i)
@@ -244,17 +248,20 @@
                 app.sections.movie.classList.remove('hide')
                 app.sections.favorites.classList.add('hide')
                 app.sections.back.classList.remove('hide')
+                app.sections.filterbar.classList.add('hide')
+                app.sections.sortbar.classList.add('hide')
                 app.sections.movie.innerHTML = ''
                 // find the required movie
                 var detailData = app.cache.results.find(function(result) {
                     return result.id == id
                 });
-                console.log(detailData)
                 if (typeof detailData === 'undefined' || detailData === null) {
                     detailData = JSON.parse(localStorage.data).find(function(result) {
                         return result.id == id
+                        if (typeof detailData === 'undefined' || detailData === null) {
+                            handleRoute("random")
+                        }
                     });
-                    console.log(detailData)
                 }
                 render.detail(detailData);
                 break;
@@ -274,9 +281,12 @@
                 app.sections.movie.classList.add('hide')
                 app.sections.back.classList.remove('hide')
                 app.sections.favorites.classList.remove('hide')
+                app.sections.filterbar.classList.add('hide')
+                app.sections.sortbar.classList.remove('hide')
                 app.sections.favorites.innerHTML = ''
                 // add X amount of movies to the overviewpage
                 var favorites = JSON.parse(localStorage.data);
+                favorites = sort.byAmount(favorites, 'popularity', false)
                 favorites.forEach(function(result) {
                     render.favorites(result)
                 });

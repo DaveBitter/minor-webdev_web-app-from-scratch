@@ -40,6 +40,10 @@ body>header+* {
     margin-top: 8rem;
 }
 
+body>header * {
+    color: #fff
+}
+
 body>header {
     z-index: 1000;
     position: fixed;
@@ -55,7 +59,7 @@ body>header {
     height: 4rem;
 }
 
-#filter-bar {
+#filterbar, #sortbar {
     background-color: #333;
     position: absolute;
     left: 0;
@@ -64,9 +68,17 @@ body>header {
     margin: 0;
 }
 
+#favorite {
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+}
+
 label>p {
     float: left;
-    padding-top: .3rem;
+    padding: 0.3rem .5rem;
 }
 
 body>header button {
@@ -93,9 +105,9 @@ body>header i {
 body>header h1 {
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: .3rem;
+    letter-spacing: .1rem;
     margin: .5rem 0 0 0;
-    font-size: .9rem;
+    font-size: .8rem;
     line-height: 1.2rem;
     transition: .2s;
 }
@@ -103,6 +115,9 @@ body>header h1 {
 body>header p {
     margin: 0 0 .5rem 0;
     font-size: .8rem;
+}
+
+body>header>a p {
     font-style: italic;
 }
 
@@ -245,14 +260,13 @@ ul li {
 @media(min-width:40rem) {
     body>header {
         text-align: left;
-        padding-left: 5rem;
     }
     body>header h1 {
         font-size: 1.3rem;
         line-height: 2rem;
         margin: 0;
     }
-    body>header p {
+    body>header>a p {
         margin-left: 2rem;
     }
     section article {
@@ -308,7 +322,7 @@ article {
     display: none;
 }
 
-.loader {
+#loader {
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -331,7 +345,7 @@ article {
     display: inline-block;
     width: 3rem;
     height: 1.5rem;
-    margin-left: 1rem;
+    margin: 0 3rem 0 0rem;
 }
 
 
@@ -395,7 +409,6 @@ input:checked+.slider:before {
 
 .pull-right {
     float: right;
-    margin-right: 3rem;
 }
 
 @keyframes spinner {
