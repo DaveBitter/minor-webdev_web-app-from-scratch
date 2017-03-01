@@ -77,68 +77,38 @@
         });
     }
     var sort = {
-        initialOrder: {
-            byPopularity: "desc",
-            byRuntime: "desc"
-        },
-        byPopularity: function(order) {
-            var favorites = JSON.parse(localStorage.data)
-            app.sections.favorites.innerHTML = ''
-            if (order === "desc") {
-                sort.initialOrder.byPopularity = "asc"
-
+        desc: false,
+        byAmount: function(data, field, desc) {
+            if (desc === true) {
                 function sortNumber(a, b) {
-                    return b.popularity - a.popularity;
+                    return b[field] - a[field];
                 }
-                favorites.sort(sortNumber);
-                favorites.forEach(function(favorite) {
-                    renderFavorites(favorite)
-                });
+                data.sort(sortNumber);
             } else {
-                sort.initialOrder.byPopularity = "desc"
-
                 function sortNumber(a, b) {
-                    return a.popularity - b.popularity;
+                    return a[field] - b[field];
                 }
-                favorites.sort(sortNumber);
-                favorites.forEach(function(favorite) {
-                    renderFavorites(favorite)
-                });
+                data.sort(sortNumber);
             }
-        },
-        byRuntime: function(order) {
-            var favorites = JSON.parse(localStorage.data)
-            app.sections.favorites.innerHTML = ''
-            if (order === "desc") {
-                sort.initialOrder.byRuntime = "asc"
-
-                function sortNumber(a, b) {
-                    return b.runtime - a.runtime;
-                }
-                favorites.sort(sortNumber);
-                favorites.forEach(function(favorite) {
-                    renderFavorites(favorite)
-                });
-            } else {
-                sort.initialOrder.byRuntime = "desc"
-
-                function sortNumber(a, b) {
-                    return a.runtime - b.runtime;
-                }
-                favorites.sort(sortNumber);
-                favorites.forEach(function(favorite) {
-                    renderFavorites(favorite)
-                });
-            }
+            sort.desc = !sort.desc;
+            return data
         },
         listen: function() {
             document.querySelector('#sort-popularity').addEventListener('click', function() {
                 document.querySelector('#sort-runtime').checked = false;
-                sort.byPopularity(sort.initialOrder.byPopularity)
+                var sortedData = sort.byAmount(JSON.parse(localStorage.data), 'popularity', sort.desc);
+                app.sections.favorites.innerHTML = '';
+                sortedData.forEach(function(movie) {
+                    renderFavorites(movie)
+                });
             });
             document.querySelector('#sort-runtime').addEventListener('click', function() {
                 document.querySelector('#sort-popularity').checked = false;
-                sort.byRuntime(sort.initialOrder.byRuntime)
+                var sortedData = sort.byAmount(JSON.parse(localStorage.data), 'runtime', sort.desc);
+                app.sections.favorites.innerHTML = '';
+                sortedData.forEach(function(movie) {
+                    renderFavorites(movie)
+                });
             });
         }
     }
@@ -281,7 +251,6 @@
                 });
                 console.log(detailData)
                 if (typeof detailData === 'undefined' || detailData === null) {
-                    console.log("Undefined yoo")
                     detailData = JSON.parse(localStorage.data).find(function(result) {
                         return result.id == id
                     });
