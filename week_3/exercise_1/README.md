@@ -15,6 +15,12 @@ WMTW is a single page app providing users truly random movie suggestions. On sit
 + 404-handling
 + more robust way of infinite scrolling
 
+# Sources
++ [The Movie Database](https://www.themoviedb.org)
++ [Handlebars](http://handlebarsjs.com/)
++ [Aja](http://krampstudio.com/aja.js/)
++ [Routie](https://github.com/jgallen23/routie)
+
 # Live version
 You can use the app [here](http://wmtw.davebitter.com).
 
