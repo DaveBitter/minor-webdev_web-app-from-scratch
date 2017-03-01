@@ -2,11 +2,11 @@
 WMTW is a single page app providing users truly random movie suggestions. On sites like IMDB you can also get movie suggestions, but they're almost always based on the best of topics. This app doesn't look at those statistics. It will show you the weirdest, least-known movies alongside blockbusters. Give it a try, you never know what movie you'll end up watching!
 
 # Features
-+truly random movie suggestions
-+infinite list of suggestions
-+storing favorites
-+sorting favorites on popularity or runtime
-+filtering on adult movies
++ truly random movie suggestions
++ infinite list of suggestions
++ storing favorites
++ sorting favorites on popularity or runtime
++ filtering on adult movies
 
 # Live version
 You can use the app [here](http://wmtw.davebitter.com).
