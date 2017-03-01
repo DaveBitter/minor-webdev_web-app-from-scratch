@@ -72,12 +72,6 @@
             getData(url, time)
         }
     }
-    var swipe = function() {
-        var bodySwipe = new Hammer(document.querySelector('body'));
-        bodySwipe.on('swiperight', function(ev) {
-            handleRoute('random')
-        });
-    }
     var sort = {
         desc: false,
         byAmount: function(data, field, desc) {
@@ -384,6 +378,7 @@
             }
         });
     }
+
     app.init();
 })();
 // MicroLibs used:
