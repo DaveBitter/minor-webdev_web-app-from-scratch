@@ -15,6 +15,12 @@
             results: [],
             favorites: []
         },
+        sections: {
+            movies: document.querySelector('#movies'),
+            movie: document.querySelector('#movie'),
+            favorites: document.querySelector('#favorites'),
+            back: document.querySelector('#back')
+        },
         init: function() {
             router.init();
             getFilterConfig();
@@ -77,7 +83,7 @@
         },
         byPopularity: function(order) {
             var favorites = JSON.parse(localStorage.data)
-            document.querySelector('#favorites').innerHTML = ''
+            app.sections.favorites.innerHTML = ''
             if (order === "desc") {
                 sort.initialOrder.byPopularity = "asc"
 
@@ -102,7 +108,7 @@
         },
         byRuntime: function(order) {
             var favorites = JSON.parse(localStorage.data)
-            document.querySelector('#favorites').innerHTML = ''
+            app.sections.favorites.innerHTML = ''
             if (order === "desc") {
                 sort.initialOrder.byRuntime = "asc"
 
@@ -166,7 +172,7 @@
     }
     // render overviewpage
     var renderAll = function(data) {
-        var movies = document.querySelector('#movies'),
+        var movies = app.sections.movies,
             template = document.querySelector('#template'),
             source = template.innerHTML,
             compile = Handlebars.compile(source),
@@ -176,7 +182,7 @@
     }
     // render favorites
     var renderFavorites = function(data) {
-        var favorites = document.querySelector('#favorites'),
+        var favorites = app.sections.favorites,
             template = document.querySelector('#template'),
             source = template.innerHTML,
             compile = Handlebars.compile(source),
@@ -191,7 +197,7 @@
         if (typeof template === 'undefined' || template === null) {
             window.location.href = ('#')
         }
-        var movies = document.querySelector('#movie'),
+        var movies = app.sections.movie,
             source = template.innerHTML,
             compile = Handlebars.compile(source),
             html = ''
@@ -246,10 +252,10 @@
                 break;
             case "random":
                 // build the url for the query for the overviewpage
-                document.querySelector('#movies').classList.remove('hide')
-                document.querySelector('#movie').classList.add('hide')
-                document.querySelector('#favorites').classList.add('hide')
-                document.querySelector('#back').classList.add('hide')
+                app.sections.movies.classList.remove('hide')
+                app.sections.movie.classList.add('hide')
+                app.sections.favorites.classList.add('hide')
+                app.sections.back.classList.add('hide')
                 window.scrollTo(0, app.cache.position);
                 // add X amount of movies to the overviewpage
                 toggleLoader();
@@ -264,11 +270,11 @@
                 break;
             case "detail":
                 // get all the data from the required movie out of the app.cached movies
-                document.querySelector('#movies').classList.add('hide')
-                document.querySelector('#movie').classList.remove('hide')
-                document.querySelector('#favorites').classList.add('hide')
-                document.querySelector('#back').classList.remove('hide')
-                document.querySelector('#movie').innerHTML = ''
+                app.sections.movies.classList.add('hide')
+                app.sections.movie.classList.remove('hide')
+                app.sections.favorites.classList.add('hide')
+                app.sections.back.classList.remove('hide')
+                app.sections.movie.innerHTML = ''
                 // find the required movie
                 var detailData = app.cache.results.find(function(result) {
                     return result.id == id
@@ -295,11 +301,11 @@
                 break;
             case "favorites":
                 // build the url for the query for the overviewpage
-                document.querySelector('#movies').classList.add('hide')
-                document.querySelector('#movie').classList.add('hide')
-                document.querySelector('#back').classList.remove('hide')
-                document.querySelector('#favorites').classList.remove('hide')
-                document.querySelector('#favorites').innerHTML = ''
+                app.sections.movies.classList.add('hide')
+                app.sections.movie.classList.add('hide')
+                app.sections.back.classList.remove('hide')
+                app.sections.favorites.classList.remove('hide')
+                app.sections.favorites.innerHTML = ''
                 // add X amount of movies to the overviewpage
                 var favorites = JSON.parse(localStorage.data);
                 favorites.forEach(function(result) {
