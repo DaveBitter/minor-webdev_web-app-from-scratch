@@ -37,7 +37,7 @@
                 'movie/:id/favorite': function(id) {
                     handleRoute("favorite", id);
                 },
-                 'favorites': function() {
+                'favorites': function() {
                     handleRoute("favorites");
                 },
             });
@@ -50,7 +50,7 @@
         init: function() {
             swipe();
             scroll();
-            // favorite();
+            sort.listen();
         }
     }
     var filter = {
@@ -69,6 +69,76 @@
         bodySwipe.on('swiperight', function(ev) {
             handleRoute('random')
         });
+    }
+    var sort = {
+        initialOrder: {
+            byPopularity: "desc",
+            byRuntime: "desc"
+        },
+        byPopularity: function(order) {
+            var favorites = JSON.parse(localStorage.data)
+            document.querySelector('#favorites').innerHTML = ''
+
+            if (order === "desc") {
+                sort.initialOrder.byPopularity = "asc"
+
+                function sortNumber(a, b) {
+                    return  b.popularity - a.popularity;
+                }
+                favorites.sort(sortNumber);
+                favorites.forEach(function(favorite) {
+                    renderFavorites(favorite)
+                });
+
+            } else {
+                sort.initialOrder.byPopularity = "desc"
+
+                function sortNumber(a, b) {
+                    return a.popularity - b.popularity;
+                }
+                favorites.sort(sortNumber);
+                favorites.forEach(function(favorite) {
+                    renderFavorites(favorite)
+                });
+            }
+        },
+         byRuntime: function(order) {
+            var favorites = JSON.parse(localStorage.data)
+            document.querySelector('#favorites').innerHTML = ''
+
+            if (order === "desc") {
+                sort.initialOrder.byRuntime = "asc"
+
+                function sortNumber(a, b) {
+                    return  b.runtime - a.runtime;
+                }
+                favorites.sort(sortNumber);
+                favorites.forEach(function(favorite) {
+                    renderFavorites(favorite)
+                });
+
+            } else {
+                sort.initialOrder.byRuntime = "desc"
+
+                function sortNumber(a, b) {
+                    return a.runtime - b.runtime;
+                }
+                favorites.sort(sortNumber);
+                favorites.forEach(function(favorite) {
+                    renderFavorites(favorite)
+                });
+            }
+        },
+        listen: function() {
+            document.querySelector('#sort-popularity').addEventListener('click', function() {
+                document.querySelector('#sort-runtime').checked = false;
+                sort.byPopularity(sort.initialOrder.byPopularity)
+            });
+            document.querySelector('#sort-runtime').addEventListener('click', function() {
+                document.querySelector('#sort-popularity').checked = false;
+                sort.byRuntime(sort.initialOrder.byRuntime)
+            });
+        }
     }
     var construct = {
         posterPath: function(path) {
@@ -210,17 +280,16 @@
                 render.detail(detailData);
                 break;
             case "favorite":
-               var movieData = app.cache.results.find(function(result) {
+                var movieData = app.cache.results.find(function(result) {
                     return result.id == id
                 });
-               document.querySelector('#favorite').classList.remove('fa-heart-o')
-               document.querySelector('#favorite').classList.add('fa-heart')
-
-               movieData.favorite = true;
-               app.cache.favorites.push(movieData)
-               localStorage.setItem('data', JSON.stringify(app.cache.favorites));
+                document.querySelector('#favorite').classList.remove('fa-heart-o')
+                document.querySelector('#favorite').classList.add('fa-heart')
+                movieData.favorite = true;
+                app.cache.favorites.push(movieData)
+                localStorage.setItem('data', JSON.stringify(app.cache.favorites));
                 break;
-             case "favorites":
+            case "favorites":
                 // build the url for the query for the overviewpage
                 document.querySelector('#movies').classList.add('hide')
                 document.querySelector('#movie').classList.add('hide')
@@ -307,7 +376,7 @@
         var limit = function() {
             setTimeout(function() {
                 canLoad = true
-            }, 000);
+            }, 3000);
         }
         var canLoad = true;
         // check if the user scrolled to the bottom of the page (then add new items)
