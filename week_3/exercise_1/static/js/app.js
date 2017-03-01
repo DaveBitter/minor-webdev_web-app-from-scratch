@@ -341,6 +341,17 @@
     var buildImdbLink = function(imdb_id) {
         return ('http://imdb.com/title/' + imdb_id)
     }
+    var swipe = function() {
+        var bodySwipe = new Hammer(document.querySelector('body'));
+        bodySwipe.on('swiperight', function(ev) {
+            handleRoute('random')
+        });
+    }
+    var limit = function() {
+        setTimeout(function() {
+            canLoad = true
+        }, 3000);
+    }
     var scroll = function() {
         // get position of the 'refresh element'
         var cumulativeOffset = function(element) {
@@ -356,11 +367,6 @@
                 left: left
             };
         };
-        var limit = function() {
-            setTimeout(function() {
-                canLoad = true
-            }, 3000);
-        }
         var canLoad = true;
         // check if the user scrolled to the bottom of the page (then add new items)
         window.addEventListener('scroll', function(e) {
@@ -378,7 +384,6 @@
             }
         });
     }
-
     app.init();
 })();
 // MicroLibs used:
