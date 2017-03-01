@@ -5,8 +5,14 @@ WMTW is a single page app providing users truly random movie suggestions. On sit
 + truly random movie suggestions
 + infinite list of suggestions
 + storing favorites
-+ sorting favorites on popularity or runtime
 + filtering on adult movies
++ sorting favorites on popularity or runtime
+
+# Wishlist
++ more filter-options
++ more sort-options
++ 404-handling
++ more robust way of infinite scrolling
 
 # Live version
 You can use the app [here](http://wmtw.davebitter.com).
