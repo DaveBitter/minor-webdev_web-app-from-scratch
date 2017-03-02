@@ -92,6 +92,7 @@
         listen: function() {
             document.querySelector('#sort-popularity').addEventListener('click', function() {
                 document.querySelector('#sort-runtime').checked = false;
+                // you can only save strings so I stringify the array and parse it when needed
                 var sortedData = sort.byAmount(JSON.parse(localStorage.data), 'popularity', sort.desc);
                 app.sections.favorites.innerHTML = '';
                 sortedData.forEach(function(movie) {
@@ -100,6 +101,7 @@
             });
             document.querySelector('#sort-runtime').addEventListener('click', function() {
                 document.querySelector('#sort-popularity').checked = false;
+                // you can only save strings so I stringify the array and parse it when needed
                 var sortedData = sort.byAmount(JSON.parse(localStorage.data), 'runtime', sort.desc);
                 app.sections.favorites.innerHTML = '';
                 sortedData.forEach(function(movie) {
@@ -178,6 +180,7 @@
     // get data from API
     var getData = function(url, time) {
         aja().url(url).on('4xx', function() {
+            // turn of the loader when the last movie is loaded
             if (time === 29) {
                 toggleLoader();
             }
@@ -249,7 +252,9 @@
                 var detailData = app.cache.results.find(function(result) {
                     return result.id == id
                 });
+                //  I need to check whether the movie is in cache data, if it isn't than the movie is probably one of the favorite movies. In this case I have to get it from the localStorage
                 if (typeof detailData === 'undefined' || detailData === null) {
+                    // you can only save strings so I stringify the array and parse it when needed
                     detailData = JSON.parse(localStorage.data).find(function(result) {
                         return result.id == id
                         if (typeof detailData === 'undefined' || detailData === null) {
@@ -267,6 +272,7 @@
                 document.querySelector('#favorite').classList.add('fa-heart')
                 movieData.favorite = true;
                 app.cache.favorites.push(movieData)
+                // you can only save strings so I stringify the array and parse it when needed
                 localStorage.setItem('data', JSON.stringify(app.cache.favorites));
                 break;
             case "favorites":
@@ -386,7 +392,3 @@
     }
     app.init();
 })();
-// MicroLibs used:
-// Handlebars (http://handlebarsjs.com/)
-// Aja (http://krampstudio.com/aja.js/)
-// Routie (https://github.com/jgallen23/routie)
