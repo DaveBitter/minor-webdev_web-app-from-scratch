@@ -8,6 +8,9 @@ This repository holds the seperate exercises for the course 'Web App From Scratc
 
 All exercise folders are standalone projects and work as such. You can navigate through the folder structure or through the navigation below.
 
+## Final Version
+You can view the final version of the app [here](week_3/exercise_1/)
+
 ## Issues
 I highly encourage adding issues to this repo in the case of finding one. I'm always up for improving my code.
 
